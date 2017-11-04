@@ -12,4 +12,9 @@
 		
 		<module>playground</module>
 	</modules>
+
+	<properties>
+		<version.junit>3.8.1</version.junit>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 </project>
