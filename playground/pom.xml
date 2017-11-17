@@ -10,9 +10,19 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.github.claasahl.forex</groupId>
+			<artifactId>fx-base</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.reactivex.rxjava2</groupId>
+			<artifactId>rxjava</artifactId>
+			<version>${version.io.reactivex.rxjava2.rxjava}</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${version.junit}</version>
+			<version>${version.junit.junit}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

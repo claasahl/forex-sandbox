@@ -9,12 +9,54 @@
 
 	<modules>
 		<module>fx-base</module>
-		
+
 		<module>playground</module>
 	</modules>
 
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.org.apache.maven.plugins.maven-compiler-plugin}</version>
+				<configuration>
+					<source>${version.java}</source>
+					<target>${version.java}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${version.org.apache.maven.plugins.maven-source-plugin}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${version.org.apache.maven.plugins.maven-javadoc-plugin}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<properties>
-		<version.junit>3.8.1</version.junit>
+		<version.java>1.8</version.java>
+		<version.junit.junit>3.8.1</version.junit.junit>
+		<version.io.reactivex.rxjava2.rxjava>2.1.6</version.io.reactivex.rxjava2.rxjava>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<version.org.apache.maven.plugins.maven-compiler-plugin>3.7.0</version.org.apache.maven.plugins.maven-compiler-plugin>
+		<version.org.apache.maven.plugins.maven-source-plugin>3.0.1</version.org.apache.maven.plugins.maven-source-plugin>
+		<version.org.apache.maven.plugins.maven-javadoc-plugin>3.0.0-M1</version.org.apache.maven.plugins.maven-javadoc-plugin>
 	</properties>
 </project>
