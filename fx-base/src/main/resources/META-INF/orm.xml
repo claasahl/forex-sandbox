@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+	version="2.1">
+	<entity class="org.github.claasahl.forex.repository.SymbolDraft">
+		<table name="JPA_SYMBOL">
+			<index column-list="name,duration" unique="true" />
+		</table>
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO" />
+			</id>
+		</attributes>
+	</entity>
+	<entity class="org.github.claasahl.forex.repository.CandleDraft">
+		<table name="JPA_CANDLE">
+			<index column-list="dateTime" unique="false" />
+		</table>
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO" />
+			</id>
+		</attributes>
+	</entity>
+	<entity class="org.github.claasahl.forex.repository.RateDraft">
+		<table name="JPA_RATE">
+			<index column-list="dateTime" unique="false" />
+		</table>
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO" />
+			</id>
+		</attributes>
+	</entity>
+</entity-mappings>

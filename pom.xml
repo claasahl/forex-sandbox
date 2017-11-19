@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.github.claasahl.forex</groupId>
+	<artifactId>fx-sandbox</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>fx-base</module>
+
+		<module>playground</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.org.apache.maven.plugins.maven-compiler-plugin}</version>
+				<configuration>
+					<source>${version.java}</source>
+					<target>${version.java}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${version.org.apache.maven.plugins.maven-source-plugin}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!--<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${version.org.apache.maven.plugins.maven-javadoc-plugin}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>-->
+		</plugins>
+	</build>
+
+	<properties>
+		<version.java>1.8</version.java>
+		<version.junit.junit>4.12</version.junit.junit>
+		<version.io.reactivex.rxjava2.rxjava>2.1.0</version.io.reactivex.rxjava2.rxjava>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<version.org.apache.maven.plugins.maven-compiler-plugin>3.7.0</version.org.apache.maven.plugins.maven-compiler-plugin>
+		<version.org.apache.maven.plugins.maven-source-plugin>3.0.1</version.org.apache.maven.plugins.maven-source-plugin>
+		<version.org.apache.maven.plugins.maven-javadoc-plugin>3.0.0-M1</version.org.apache.maven.plugins.maven-javadoc-plugin>
+	</properties>
+</project>
