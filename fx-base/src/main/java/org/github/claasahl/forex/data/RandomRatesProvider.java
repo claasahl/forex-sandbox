@@ -9,6 +9,7 @@ public class RandomRatesProvider implements RateSeries {
 	@Override
 	public Observable<Rate> rates(String symbol) {
 		// TODO implement
+		// TODO should only emit a rate every "few" seconds or so
 		return Observable.empty();
 	}
 

@@ -9,6 +9,7 @@ public class RandomCandlesProvider implements CandleSeries {
 	@Override
 	public Observable<Candle> candles(String symbol, Duration duration) {
 		// TODO implement
+		// TODO should only emit a candle every "duration"
 		return Observable.empty();
 	}
 
