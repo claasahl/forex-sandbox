@@ -1,14 +1,22 @@
 package org.github.claasahl.forex.data;
 
 import java.time.*;
-import io.reactivex.Observable;
+import java.util.concurrent.TimeUnit;
+import io.reactivex.*;
+import io.reactivex.schedulers.Schedulers;
 
 public class DateTimeHelper {
-	public static Observable<OffsetDateTime> liveDateTime(OffsetDateTime start, Duration duration) {
-		return Observable.empty();
+	public static Observable<OffsetDateTime> liveDateTime(final OffsetDateTime start, final Duration duration) {
+		return liveDateTime(start, duration, Schedulers.computation());
 	}
 
-	public static Observable<OffsetDateTime> liveDateTime(OffsetDateTime start) {
+	public static Observable<OffsetDateTime> liveDateTime(final OffsetDateTime start, final Duration duration,
+			final Scheduler scheduler) {
+		return Observable.interval(0, duration.toMillis(), TimeUnit.MILLISECONDS, scheduler)
+				.map(multiplicand -> start.plus(duration.multipliedBy(multiplicand)));
+	}
+
+	public static Observable<OffsetDateTime> liveDateTime(final OffsetDateTime start) {
 		return Observable.empty();
 	}
 
