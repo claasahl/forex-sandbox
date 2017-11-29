@@ -6,29 +6,29 @@ import io.reactivex.*;
 import io.reactivex.schedulers.Schedulers;
 
 public class DateTimeHelper {
-	public static Observable<OffsetDateTime> liveDateTime(final OffsetDateTime start, final Duration duration) {
-		return liveDateTime(start, duration, Schedulers.computation());
+	public static Observable<OffsetDateTime> live(final OffsetDateTime start, final Duration duration) {
+		return live(start, duration, Schedulers.computation());
 	}
 
-	public static Observable<OffsetDateTime> liveDateTime(final OffsetDateTime start, final Duration duration,
+	public static Observable<OffsetDateTime> live(final OffsetDateTime start, final Duration duration,
 			final Scheduler scheduler) {
 		return Observable.interval(0, duration.toMillis(), TimeUnit.MILLISECONDS, scheduler)
 				.map(multiplicand -> start.plus(duration.multipliedBy(multiplicand)));
 	}
 
-	public static Observable<OffsetDateTime> liveDateTime(final OffsetDateTime start) {
+	public static Observable<OffsetDateTime> live(final OffsetDateTime start) {
 		return Observable.empty();
 	}
 
-	public static Observable<OffsetDateTime> historicDateTime(OffsetDateTime start, OffsetDateTime end,
-			Duration duration) {
+	public static Observable<OffsetDateTime> historic(OffsetDateTime start, Duration duration) {
 		return Observable.<OffsetDateTime, OffsetDateTime>generate(() -> start, (dateTime, emitter) -> {
 			emitter.onNext(dateTime);
 			return dateTime.plus(duration);
-		}).takeWhile(d -> !d.isAfter(end));
+		});
 	}
 
-	public static Observable<OffsetDateTime> historicDateTime(OffsetDateTime start, OffsetDateTime end) {
-		return Observable.empty();
+	public static Observable<OffsetDateTime> historic(OffsetDateTime start, OffsetDateTime end,
+			Duration duration) {
+		return historic(start, duration).takeWhile(d -> !d.isAfter(end));
 	}
 }
