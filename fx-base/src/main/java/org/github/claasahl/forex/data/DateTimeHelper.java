@@ -20,15 +20,15 @@ public class DateTimeHelper {
 		return Observable.empty();
 	}
 
-	public static Observable<OffsetDateTime> historic(OffsetDateTime start, Duration duration) {
+	public static Observable<OffsetDateTime> historic(final OffsetDateTime start, final Duration duration) {
 		return Observable.<OffsetDateTime, OffsetDateTime>generate(() -> start, (dateTime, emitter) -> {
 			emitter.onNext(dateTime);
 			return dateTime.plus(duration);
 		});
 	}
 
-	public static Observable<OffsetDateTime> historic(OffsetDateTime start, OffsetDateTime end,
-			Duration duration) {
+	public static Observable<OffsetDateTime> historic(final OffsetDateTime start, final OffsetDateTime end,
+			final Duration duration) {
 		return historic(start, duration).takeWhile(d -> !d.isAfter(end));
 	}
 }
