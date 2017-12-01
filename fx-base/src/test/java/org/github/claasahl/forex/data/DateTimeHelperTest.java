@@ -11,11 +11,11 @@ public class DateTimeHelperTest {
 	@Test
 	public void shouldEmitLiveDateTimes() {
 		TestScheduler scheduler = new TestScheduler();
-		OffsetDateTime start = OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC);
+		OffsetDateTime from = OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC);
 		Duration duration = Duration.ofMinutes(1);
 
 		TestObserver<OffsetDateTime> test = DateTimeHelper
-				.live(start, duration, scheduler)
+				.live(from, duration, scheduler)
 				.take(4)
 				.test();
 		scheduler.advanceTimeTo(59999, TimeUnit.MILLISECONDS);
@@ -40,10 +40,10 @@ public class DateTimeHelperTest {
 
 	@Test
 	public void shouldEmitUnlimitedHistoricDateTimes() {
-		OffsetDateTime start = OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC);
+		OffsetDateTime from = OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC);
 		Duration duration = Duration.ofMinutes(1);
 
-		DateTimeHelper.historic(start, duration)
+		DateTimeHelper.historic(from, duration)
 				.take(3)
 				.test()
 				.assertValues(OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC),
@@ -54,11 +54,11 @@ public class DateTimeHelperTest {
 	
 	@Test
 	public void shouldEmitLimitedHistoricDateTimes() {
-		OffsetDateTime start = OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC);
-		OffsetDateTime end = OffsetDateTime.of(2017, 11, 1, 15, 25, 0, 0, ZoneOffset.UTC);
+		OffsetDateTime from = OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC);
+		OffsetDateTime to = OffsetDateTime.of(2017, 11, 1, 15, 25, 0, 0, ZoneOffset.UTC);
 		Duration duration = Duration.ofMinutes(1);
 
-		DateTimeHelper.historic(start, end, duration)
+		DateTimeHelper.historic(from, to, duration)
 				.test()
 				.assertValues(OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC),
 						OffsetDateTime.of(2017, 11, 1, 15, 24, 0, 0, ZoneOffset.UTC),
