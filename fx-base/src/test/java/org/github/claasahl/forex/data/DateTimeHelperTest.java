@@ -11,11 +11,11 @@ public class DateTimeHelperTest {
 	@Test
 	public void shouldEmitLiveDateTimes() {
 		TestScheduler scheduler = new TestScheduler();
-		OffsetDateTime from = OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC);
 		Duration duration = Duration.ofMinutes(1);
+		OffsetDateTime from = OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC);
 
 		TestObserver<OffsetDateTime> test = DateTimeHelper
-				.live(from, duration, scheduler)
+				.live(duration, from, scheduler)
 				.take(4)
 				.test();
 		scheduler.advanceTimeTo(59999, TimeUnit.MILLISECONDS);
@@ -43,7 +43,7 @@ public class DateTimeHelperTest {
 		OffsetDateTime from = OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC);
 		Duration duration = Duration.ofMinutes(1);
 
-		DateTimeHelper.historic(from, duration)
+		DateTimeHelper.historic(duration, from)
 				.take(3)
 				.test()
 				.assertValues(OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC),
@@ -58,7 +58,7 @@ public class DateTimeHelperTest {
 		OffsetDateTime to = OffsetDateTime.of(2017, 11, 1, 15, 25, 0, 0, ZoneOffset.UTC);
 		Duration duration = Duration.ofMinutes(1);
 
-		DateTimeHelper.historic(from, to, duration)
+		DateTimeHelper.historic(duration, from, to)
 				.test()
 				.assertValues(OffsetDateTime.of(2017, 11, 1, 15, 23, 0, 0, ZoneOffset.UTC),
 						OffsetDateTime.of(2017, 11, 1, 15, 24, 0, 0, ZoneOffset.UTC),
