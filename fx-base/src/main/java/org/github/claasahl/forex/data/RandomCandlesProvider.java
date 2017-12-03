@@ -9,15 +9,14 @@ import io.reactivex.Observable;
 public class RandomCandlesProvider implements CandleSeries {
 	@Override
 	public Observable<Candle> candles(String symbol, Duration duration) {
-		// TODO implement
-		// TODO should only emit a candle every "duration"
-		return Observable.empty();
+		final RandomCandles producer = new RandomCandles(symbol, duration);
+		final OffsetDateTime from = OffsetDateTime.now();
+		return DateTimeHelper.live(duration, from).map(producer::apply);
 	}
 
 	@Override
 	public Observable<Candle> candles(String symbol, Duration duration, OffsetDateTime from, OffsetDateTime to) {
-		return new Generator<>(() -> duration, new RandomCandles(symbol, duration))
-				.generate(from)
-				.takeWhile(candle -> !candle.getDateTime().plus(duration).isAfter(to));
+		final RandomCandles producer = new RandomCandles(symbol, duration);
+		return DateTimeHelper.historic(duration, from, to).map(producer::apply);
 	}
 }
