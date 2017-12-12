@@ -16,11 +16,11 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.4.6.v20170531</version>
+				<version>${version.org.eclipse.jetty.jetty-maven-plugin}</version>
 			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>${version.org.apache.maven.plugins.maven-war-plugin}</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -29,22 +29,22 @@
 		<dependency>
 			<groupId>com.graphql-java</groupId>
 			<artifactId>graphql-java</artifactId>
-			<version>3.0.0</version>
+			<version>${version.com.graphql-java.graphql-java}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.graphql-java</groupId>
 			<artifactId>graphql-java-tools</artifactId>
-			<version>3.2.0</version>
+			<version>${version.com.graphql-java.graphql-java-tools}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.graphql-java</groupId>
 			<artifactId>graphql-java-servlet</artifactId>
-			<version>4.0.0</version>
+			<version>${version.com.graphql-java.graphql-java-servlet}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
+			<version>${version.javax.servlet.javax.servlet-api}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -54,6 +54,16 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<properties>
+		<version.com.graphql-java.graphql-java>3.0.0</version.com.graphql-java.graphql-java>
+		<version.com.graphql-java.graphql-java-tools>3.2.0</version.com.graphql-java.graphql-java-tools>
+		<version.com.graphql-java.graphql-java-servlet>4.0.0</version.com.graphql-java.graphql-java-servlet>
+		<version.javax.servlet.javax.servlet-api>3.0.1</version.javax.servlet.javax.servlet-api>
+		<version.org.eclipse.jetty.jetty-maven-plugin>9.4.6.v20170531</version.org.eclipse.jetty.jetty-maven-plugin>
+		<version.org.apache.maven.plugins.maven-war-plugin>3.1.0</version.org.apache.maven.plugins.maven-war-plugin>
+	</properties>
+
 	<parent>
 		<groupId>org.github.claasahl.forex</groupId>
 		<artifactId>fx-sandbox</artifactId>
