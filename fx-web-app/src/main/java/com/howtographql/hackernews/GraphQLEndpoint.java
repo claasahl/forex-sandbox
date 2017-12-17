@@ -9,15 +9,14 @@ import graphql.servlet.SimpleGraphQLServlet;
 public class GraphQLEndpoint extends SimpleGraphQLServlet {
 
     public GraphQLEndpoint() {
-        super(buildSchema());
+        super(buildSchema(new LinkRepository()));
     }
 
-    private static GraphQLSchema buildSchema() {
-        LinkRepository linkRepository = new LinkRepository();
+    private static GraphQLSchema buildSchema(LinkRepository linkRepository) {
         return SchemaParser.newParser()
-                .file("schema.graphqls")
-                .resolvers(new Query(linkRepository))
-                .build()
-                .makeExecutableSchema();
+            .file("schema.graphqls")
+            .resolvers(new Query(linkRepository), new Mutation(linkRepository))
+            .build()
+            .makeExecutableSchema();
     }
 }
