@@ -1,7 +1,9 @@
 type Link {
-  url: String!
-  description: String!
+    id: ID!
+    url: String!
+    description: String
 }
+
 type Query {
   allLinks: [Link]
 }
