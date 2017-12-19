@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.howtographql.hackernews.LinkMapper">
+	<resultMap type="Link" id="linkMap">
+		<constructor>
+			<idArg javaType="String" column="id" />
+			<arg javaType="String" column="url" />
+			<arg javaType="String" column="description" />
+		</constructor>
+	</resultMap>
+	<select id="selectLink" resultMap="linkMap">
+		select * from Link where id = #{id}
+	</select>
+</mapper>
