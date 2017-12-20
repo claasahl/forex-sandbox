@@ -10,7 +10,23 @@
 			<arg javaType="String" column="description" />
 		</constructor>
 	</resultMap>
-	<select id="selectLink" resultMap="linkMap">
+	<insert id="create" parameterType="Link">
+		insert into Link
+		(id,url,description) values (#{id},#{url},#{description})
+	</insert>
+	<select id="read" resultMap="linkMap">
 		select * from Link where id = #{id}
 	</select>
+	<select id="readAll" resultMap="linkMap">
+		select * from Link
+	</select>
+	<update id="update" parameterType="Link">
+		update Link set
+		url = #{url},
+		description = #{description}
+		where id = #{id}
+	</update>
+	<delete id="deleteAuthor" parameterType="Link">
+		delete from Link where id = #{id}
+	</delete>
 </mapper>

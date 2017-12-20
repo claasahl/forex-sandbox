@@ -1,7 +1,7 @@
 package com.howtographql.hackernews;
 
 import java.io.*;
-import java.util.Properties;
+import java.util.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.*;
 import org.flywaydb.core.Flyway;
@@ -23,8 +23,8 @@ public class Main {
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
 			LinkMapper mapper = session.getMapper(LinkMapper.class);
-			Link link = mapper.selectLink("101");
-			System.out.println(link);
+			List<Link> links = mapper.readAll();
+			System.out.println(links);
 		} finally {
 			session.close();
 		}
