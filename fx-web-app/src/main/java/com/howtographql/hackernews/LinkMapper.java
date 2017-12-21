@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface LinkMapper {
 	void create(Link link);
-	Link read(String id);
+	Link read(int id);
 	List<Link> readAll();
 	void update(Link link);
-	void delete(String id);
+	void delete(int id);
 }

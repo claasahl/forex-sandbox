@@ -20,13 +20,14 @@ public class Main {
 		String resource = "db/mybatis-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream, props);
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
+		try(SqlSession session = sqlSessionFactory.openSession()) {
 			LinkMapper mapper = session.getMapper(LinkMapper.class);
+			Link link = new Link("abc", "def");
+			mapper.create(link);
 			List<Link> links = mapper.readAll();
 			System.out.println(links);
-		} finally {
-			session.close();
+			mapper.delete(link.getId());
+			session.commit();
 		}
 	}
 }

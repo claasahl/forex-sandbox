@@ -2,21 +2,21 @@ package com.howtographql.hackernews;
 
 public class Link {
 
-	private final String id;
+	private final int id;
 	private final String url;
 	private final String description;
 
 	public Link(String url, String description) {
-		this(null, url, description);
+		this(-1, url, description);
 	}
 
-	public Link(String id, String url, String description) {
+	public Link(int id, String url, String description) {
 		this.id = id;
 		this.url = url;
 		this.description = description;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
