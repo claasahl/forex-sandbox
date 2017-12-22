@@ -28,4 +28,9 @@ public class Link {
 		return description;
 	}
 
+	@Override
+	public String toString() {
+		return "Link [id=" + id + ", url=" + url + ", description=" + description + "]";
+	}
+
 }
