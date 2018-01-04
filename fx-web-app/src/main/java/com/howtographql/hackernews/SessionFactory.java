@@ -10,7 +10,7 @@ public class SessionFactory {
 	private static SqlSessionFactory factory;
 
 	public static SqlSessionFactory getFactory() {
-		synchronized (factory) {
+		synchronized (SessionFactory.class) {
 			if (factory == null) {
 				try {
 					factory = createFactory();
