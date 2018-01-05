@@ -7,16 +7,24 @@ import graphql.servlet.SimpleGraphQLServlet;
 
 @WebServlet(urlPatterns = "/graphql")
 public class GraphQLEndpoint extends SimpleGraphQLServlet {
+	private static final long serialVersionUID = 7727407048958240998L;
+	private static final LinkRepository linkRepository;
+	private static final UserRepository userRepository;
 
-    public GraphQLEndpoint() {
-        super(buildSchema(new LinkRepository()));
-    }
+	static {
+		linkRepository = new LinkRepository();
+		userRepository = new UserRepository();
+	}
 
-    private static GraphQLSchema buildSchema(LinkRepository linkRepository) {
-        return SchemaParser.newParser()
-            .file("schema.graphqls")
-            .resolvers(new Query(linkRepository), new Mutation(linkRepository))
-            .build()
-            .makeExecutableSchema();
-    }
+	public GraphQLEndpoint() {
+		super(buildSchema());
+	}
+
+	private static GraphQLSchema buildSchema() {
+		return SchemaParser.newParser()
+				.file("schema.graphqls")
+				.resolvers(new Query(linkRepository), new Mutation(linkRepository, userRepository))
+				.build()
+				.makeExecutableSchema();
+	}
 }

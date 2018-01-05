@@ -14,3 +14,21 @@ schema {
     query: Query
     mutation: Mutation
 }
+
+type Mutation {
+	#The new mutation
+	createUser(name: String!, authProvider: AuthData!): User
+	createLink(url: String!, description: String!): Link
+}
+
+type User {
+	id: ID!
+	name: String!
+	email: String
+	password: String
+}
+
+input AuthData {
+	email: String!
+	password: String!
+}

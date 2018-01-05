@@ -20,12 +20,13 @@ public class LinkRepository {
 		}
 	}
 
-	public void saveLink(Link link) {
+	public Link saveLink(Link link) {
 		SqlSessionFactory factory = SessionFactory.getFactory();
 		try (SqlSession session = factory.openSession()) {
 			LinkMapper mapper = session.getMapper(LinkMapper.class);
 			mapper.create(link);
 			session.commit();
+			return link;
 		}
 	}
 }
