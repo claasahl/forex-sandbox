@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.howtographql.hackernews.Link" alias="Link" />
+		<typeAlias type="com.howtographql.hackernews.User" alias="User" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -19,5 +20,6 @@
 	</environments>
 	<mappers>
 		<mapper resource="db/LinkMapper.xml" />
+		<mapper resource="db/UserMapper.xml" />
 	</mappers>
 </configuration>
