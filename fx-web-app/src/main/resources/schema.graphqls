@@ -16,9 +16,9 @@ schema {
 }
 
 type Mutation {
-	#The new mutation
 	createUser(name: String!, authProvider: AuthData!): User
 	createLink(url: String!, description: String!): Link
+	signinUser(auth: AuthData): SigninPayload
 }
 
 type User {
@@ -31,4 +31,9 @@ type User {
 input AuthData {
 	email: String!
 	password: String!
+}
+
+type SigninPayload {
+  token: String
+  user: User
 }
