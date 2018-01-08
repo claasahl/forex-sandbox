@@ -9,17 +9,20 @@
 			<arg javaType="String" column="name" />
 			<arg javaType="String" column="email" />
 			<arg javaType="String" column="password" />
+			<arg javaType="String" column="token" />
 		</constructor>
 	</resultMap>
 	<insert id="create" parameterType="User" useGeneratedKeys="true" keyProperty="id">
-		insert into User
-		(name,email,password) values (#{name},#{email},#{password})
+		insert into User (name,email,password,token) values (#{name},#{email},#{password},#{token})
 	</insert>
 	<select id="read" resultMap="userMap">
 		select * from User where id = #{id}
 	</select>
 	<select id="readByEmail" resultMap="userMap">
 		select * from User where email = #{email}
+	</select>
+	<select id="readByToken" resultMap="userMap">
+		select * from User where token = #{token}
 	</select>
 	<select id="readAll" resultMap="userMap">
 		select * from User
@@ -28,7 +31,8 @@
 		update User set
 		name = #{name},
 		email = #{email},
-		password = #{password}
+		password = #{password},
+		token = #{token}
 		where id = #{id}
 	</update>
 	<delete id="delete">

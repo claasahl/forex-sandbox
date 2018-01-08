@@ -19,6 +19,14 @@ public class UserRepository {
     	}
     }
     
+    public User findByToken(String token) {
+    	SqlSessionFactory factory = SessionFactory.getFactory();
+    	try(SqlSession session = factory.openSession()) {
+    		UserMapper mapper = session.getMapper(UserMapper.class);
+    		return mapper.readByToken(token);
+    	}
+    }
+    
     public User saveUser(User user) {
     	SqlSessionFactory factory = SessionFactory.getFactory();
     	try(SqlSession session = factory.openSession()) {
