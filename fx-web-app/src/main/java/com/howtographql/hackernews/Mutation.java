@@ -25,8 +25,9 @@ public class Mutation implements GraphQLRootResolver {
 	public SigninPayload signinUser(AuthData auth) throws IllegalAccessException {
 	    User user = userRepository.findByEmail(auth.getEmail());
 	    if (user.getPassword().equals(auth.getPassword())) {
-	    	// TODO consider using https://jwt.io rather than userId
-	        return new SigninPayload(user.getId(), user);
+	    	// TODO consider using: https://jwt.io
+	    	user = userRepository.generateToken(user);
+	        return new SigninPayload(user.getToken(), user);
 	    }
 	    throw new GraphQLException("Invalid credentials");
 	}

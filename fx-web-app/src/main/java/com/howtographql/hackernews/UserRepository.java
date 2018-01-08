@@ -1,5 +1,6 @@
 package com.howtographql.hackernews;
 
+import java.util.UUID;
 import org.apache.ibatis.session.*;
 
 public class UserRepository {
@@ -24,6 +25,17 @@ public class UserRepository {
     	try(SqlSession session = factory.openSession()) {
     		UserMapper mapper = session.getMapper(UserMapper.class);
     		return mapper.readByToken(token);
+    	}
+    }
+    
+    public User generateToken(User user) {
+    	SqlSessionFactory factory = SessionFactory.getFactory();
+    	try(SqlSession session = factory.openSession()) {
+    		UUID uuid = UUID.randomUUID();
+    		UserMapper mapper = session.getMapper(UserMapper.class);
+    		User updatedUser = new User(user.getId(), user.getName(), user.getEmail(), user.getPassword(), uuid.toString());
+    		mapper.update(updatedUser);
+    		return updatedUser;
     	}
     }
     
