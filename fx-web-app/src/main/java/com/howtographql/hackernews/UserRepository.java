@@ -35,6 +35,7 @@ public class UserRepository {
     		UserMapper mapper = session.getMapper(UserMapper.class);
     		User updatedUser = new User(user.getId(), user.getName(), user.getEmail(), user.getPassword(), uuid.toString());
     		mapper.update(updatedUser);
+    		session.commit();
     		return updatedUser;
     	}
     }
