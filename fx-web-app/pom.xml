@@ -26,6 +26,12 @@
 	</build>
 
 	<dependencies>
+		<!-- logging for jetty -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.13</version>
+		</dependency>
 		<dependency>
 			<groupId>com.graphql-java</groupId>
 			<artifactId>graphql-java</artifactId>
