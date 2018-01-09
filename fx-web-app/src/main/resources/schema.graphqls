@@ -1,18 +1,10 @@
-type Link {
-    id: ID!
-    url: String!
-    description: String
+schema {
+    query: Query
+    mutation: Mutation
 }
 
 type Query {
   allLinks: [Link]
-}
-type Mutation {
-  createLink(url: String!, description: String!): Link
-}
-schema {
-    query: Query
-    mutation: Mutation
 }
 
 type Mutation {
@@ -36,4 +28,10 @@ input AuthData {
 type SigninPayload {
   token: String
   user: User
+}
+
+type Link {
+    id: ID!
+    url: String!
+    description: String
 }
