@@ -12,10 +12,12 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	private static final long serialVersionUID = 7727407048958240998L;
 	private static final LinkRepository linkRepository;
 	private static final UserRepository userRepository;
+	private static final VoteRepository voteRepository;
 
 	static {
 		linkRepository = new LinkRepository();
 		userRepository = new UserRepository();
+		voteRepository = new VoteRepository();
 	}
 
 	public GraphQLEndpoint() {
@@ -38,9 +40,11 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 				.file("schema.graphqls")
 				.resolvers(
 						new Query(linkRepository),
-						new Mutation(linkRepository, userRepository),
+						new Mutation(linkRepository, userRepository, voteRepository),
 						new SigninResolver(),
-						new LinkResolver(userRepository))
+						new LinkResolver(userRepository),
+						new VoteResolver(linkRepository, userRepository))
+				.scalars(Scalars.dateTime)
 				.build()
 				.makeExecutableSchema();
 	}
