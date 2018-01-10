@@ -6,6 +6,7 @@
 	<typeAliases>
 		<typeAlias type="com.howtographql.hackernews.Link" alias="Link" />
 		<typeAlias type="com.howtographql.hackernews.User" alias="User" />
+		<typeAlias type="com.howtographql.hackernews.Vote" alias="Vote" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -21,5 +22,6 @@
 	<mappers>
 		<mapper resource="db/LinkMapper.xml" />
 		<mapper resource="db/UserMapper.xml" />
+		<mapper resource="db/VoteMapper.xml" />
 	</mappers>
 </configuration>
