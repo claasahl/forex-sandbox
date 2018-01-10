@@ -2,6 +2,7 @@ package com.howtographql.hackernews;
 
 import com.coxautodev.graphql.tools.GraphQLRootResolver;
 import graphql.GraphQLException;
+import graphql.schema.DataFetchingEnvironment;
 
 public class Mutation implements GraphQLRootResolver {
 	private final LinkRepository linkRepository;
@@ -12,8 +13,9 @@ public class Mutation implements GraphQLRootResolver {
 		this.userRepository = userRepository;
 	}
 
-	public Link createLink(String url, String description) {
-		Link newLink = new Link(url, description);
+	public Link createLink(String url, String description, DataFetchingEnvironment env) {
+		AuthContext context = env.getContext();
+		Link newLink = new Link(url, description, context.getUser().map(User::getId).orElse(-1));
 		return linkRepository.saveLink(newLink);
 	}
 
@@ -21,14 +23,14 @@ public class Mutation implements GraphQLRootResolver {
 		User newUser = new User(name, auth.getEmail(), auth.getPassword());
 		return userRepository.saveUser(newUser);
 	}
-	
+
 	public SigninPayload signinUser(AuthData auth) throws IllegalAccessException {
-	    User user = userRepository.findByEmail(auth.getEmail());
-	    if (user.getPassword().equals(auth.getPassword())) {
-	    	// TODO consider using: https://jwt.io
-	    	user = userRepository.generateToken(user);
-	        return new SigninPayload(user.getToken(), user);
-	    }
-	    throw new GraphQLException("Invalid credentials");
+		User user = userRepository.findByEmail(auth.getEmail());
+		if (user.getPassword().equals(auth.getPassword())) {
+			// TODO consider using: https://jwt.io
+			user = userRepository.generateToken(user);
+			return new SigninPayload(user.getToken(), user);
+		}
+		throw new GraphQLException("Invalid credentials");
 	}
 }

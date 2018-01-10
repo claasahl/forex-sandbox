@@ -1,0 +1,1 @@
+ALTER TABLE Link ADD user_id int; 

@@ -12,7 +12,7 @@ public class AuthContext extends GraphQLContext {
 		this.user = user;
 	}
 
-	public User getUser() {
-		return user;
+	public Optional<User> getUser() {
+		return Optional.ofNullable(user);
 	}
 }
