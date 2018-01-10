@@ -31,9 +31,10 @@ public class UserRepository {
     public User generateToken(User user) {
     	SqlSessionFactory factory = SessionFactory.getFactory();
     	try(SqlSession session = factory.openSession()) {
+    		// TODO remove hard-coded token
     		UUID uuid = UUID.randomUUID();
     		UserMapper mapper = session.getMapper(UserMapper.class);
-    		User updatedUser = new User(user.getId(), user.getName(), user.getEmail(), user.getPassword(), uuid.toString());
+    		User updatedUser = new User(user.getId(), user.getName(), user.getEmail(), user.getPassword(), "b05e5d52-1c56-4f4a-939c-26427cc25c7a");
     		mapper.update(updatedUser);
     		session.commit();
     		return updatedUser;

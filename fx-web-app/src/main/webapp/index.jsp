@@ -114,7 +114,7 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 5959649b3b067a55a3c1ffad',
+            'Authorization': 'Bearer b05e5d52-1c56-4f4a-939c-26427cc25c7a',
           },
           body: JSON.stringify(graphQLParams),
           credentials: 'include',
