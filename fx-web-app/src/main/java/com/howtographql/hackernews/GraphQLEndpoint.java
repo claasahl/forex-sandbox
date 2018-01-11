@@ -1,9 +1,11 @@
 package com.howtographql.hackernews;
 
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import com.coxautodev.graphql.tools.SchemaParser;
+import graphql.*;
 import graphql.schema.GraphQLSchema;
 import graphql.servlet.*;
 
@@ -31,8 +33,16 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	        .filter(id -> !id.isEmpty())
 	        .map(id -> id.replace("Bearer ", ""))
 	        .map(userRepository::findByToken)
-	        .orElse(null);
+	        .orElse(null);	
 	    return new AuthContext(user, request, response);
+	}
+	
+	@Override
+	protected List<GraphQLError> filterGraphQLErrors(List<GraphQLError> errors) {
+		return errors.stream()
+	            .filter(e -> e instanceof ExceptionWhileDataFetching || super.isClientError(e))
+	            .map(e -> e instanceof ExceptionWhileDataFetching ? new SanitizedError((ExceptionWhileDataFetching) e) : e)
+	            .collect(Collectors.toList());
 	}
 
 	private static GraphQLSchema buildSchema() {
