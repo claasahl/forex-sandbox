@@ -11,6 +11,7 @@ import graphql.servlet.*;
 
 @WebServlet(urlPatterns = "/graphql")
 public class GraphQLEndpoint extends SimpleGraphQLServlet {
+	// TODO added support for subscriptions?
 	private static final long serialVersionUID = 7727407048958240998L;
 	private static final LinkRepository linkRepository;
 	private static final UserRepository userRepository;
