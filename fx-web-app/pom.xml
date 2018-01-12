@@ -17,9 +17,6 @@
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${version.org.eclipse.jetty.jetty-maven-plugin}</version>
-				<configuration>
-					<scanIntervalSeconds>5</scanIntervalSeconds>
-				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
@@ -72,6 +69,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>${version.javax.websocket.javax.websocket-api}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${version.junit.junit}</version>
@@ -87,6 +90,7 @@
 		<version.org.flywaydb.flyway-core>4.2.0</version.org.flywaydb.flyway-core>
 		<version.org.mybatis.mybatis>3.4.5</version.org.mybatis.mybatis>
 		<version.javax.servlet.javax.servlet-api>3.0.1</version.javax.servlet.javax.servlet-api>
+		<version.javax.websocket.javax.websocket-api>1.1</version.javax.websocket.javax.websocket-api>
 		<version.org.eclipse.jetty.jetty-maven-plugin>9.4.6.v20170531</version.org.eclipse.jetty.jetty-maven-plugin>
 		<version.org.apache.maven.plugins.maven-war-plugin>3.1.0</version.org.apache.maven.plugins.maven-war-plugin>
 	</properties>
