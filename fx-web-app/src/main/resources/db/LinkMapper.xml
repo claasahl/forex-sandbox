@@ -11,7 +11,7 @@
 			<arg javaType="_int" column="user_id" />
 		</constructor>
 	</resultMap>
-	<insert id="create" parameterType="Link" useGeneratedKeys="true" keyProperty="id">
+	<insert id="create" useGeneratedKeys="true" keyProperty="id">
 		insert into Link
 		(url,description,user_id) values (#{url},#{description},#{userId})
 	</insert>
@@ -21,7 +21,7 @@
 	<select id="readAll" resultMap="linkMap">
 		select * from Link
 	</select>
-	<update id="update" parameterType="Link">
+	<update id="update">
 		update Link set
 		url = #{url},
 		description = #{description},

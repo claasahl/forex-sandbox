@@ -11,7 +11,7 @@
 			<arg javaType="_int" column="link_id" />
 		</constructor>
 	</resultMap>
-	<insert id="create" parameterType="Vote" useGeneratedKeys="true" keyProperty="id">
+	<insert id="create" useGeneratedKeys="true" keyProperty="id">
 		insert into Vote (created_at,user_id,link_id) values (#{createdAt},#{userId},#{linkId})
 	</insert>
 	<select id="read" resultMap="voteMap">
@@ -26,7 +26,7 @@
 	<select id="readAll" resultMap="voteMap">
 		select * from Vote
 	</select>
-	<update id="update" parameterType="Vote">
+	<update id="update">
 		update Vote set
 		created_at = #{createdAt},
 		user_id = #{userId},
