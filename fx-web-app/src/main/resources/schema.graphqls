@@ -4,7 +4,7 @@ schema {
 }
 
 type Query {
-  allLinks: [Link]
+	allLinks(filter: LinkFilter): [Link]
 }
 
 type Mutation {
@@ -36,6 +36,11 @@ type Link {
     url: String!
     description: String
     postedBy: User
+}
+
+input LinkFilter {
+  descriptionContains: String
+  urlContains: String
 }
 
 type Vote {

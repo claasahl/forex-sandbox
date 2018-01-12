@@ -11,12 +11,14 @@ public class LinkRepository {
 			return mapper.read(id);
 		}
 	}
-
-	public List<Link> getAllLinks() {
+	
+	public List<Link> getAllLinks(LinkFilter filter) {
 		SqlSessionFactory factory = SessionFactory.getFactory();
 		try (SqlSession session = factory.openSession()) {
 			LinkMapper mapper = session.getMapper(LinkMapper.class);
-			return mapper.readAll();
+			if(filter == null)
+				return mapper.readAll(new LinkFilter());
+			return mapper.readAll(filter);
 		}
 	}
 

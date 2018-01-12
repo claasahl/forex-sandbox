@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.howtographql.hackernews.Link" alias="Link" />
+		<typeAlias type="com.howtographql.hackernews.LinkFilter" alias="LinkFilter" />
 		<typeAlias type="com.howtographql.hackernews.User" alias="User" />
 		<typeAlias type="com.howtographql.hackernews.Vote" alias="Vote" />
 	</typeAliases>
