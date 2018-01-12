@@ -1,6 +1,7 @@
 schema {
     query: Query
     mutation: Mutation
+    subscription: Subscription
 }
 
 type Query {
@@ -12,6 +13,10 @@ type Mutation {
 	createLink(url: String!, description: String!): Link
 	signinUser(auth: AuthData): SigninPayload
 	createVote(linkId: ID): Vote
+}
+
+type Subscription {
+	linkCreated: Link
 }
 
 type User {
