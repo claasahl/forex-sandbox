@@ -1,17 +1,16 @@
 package com.howtographql.hackernews;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import com.coxautodev.graphql.tools.SchemaParser;
-import graphql.*;
 import graphql.schema.GraphQLSchema;
 import graphql.servlet.*;
 
 @WebServlet(urlPatterns = "/graphql")
 public class GraphQLEndpoint extends SimpleGraphQLServlet {
-	// TODO added support for subscriptions?
+	// TODO add support for subscriptions?
+	// TODO consider error handling (i.e. sanitizing of exceptions) 
 	private static final long serialVersionUID = 7727407048958240998L;
 	private static final LinkRepository linkRepository;
 	private static final UserRepository userRepository;
@@ -36,14 +35,6 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	        .map(userRepository::findByToken)
 	        .orElse(null);	
 	    return new AuthContext(user, request, response);
-	}
-	
-	@Override
-	protected List<GraphQLError> filterGraphQLErrors(List<GraphQLError> errors) {
-		return errors.stream()
-	            .filter(e -> e instanceof ExceptionWhileDataFetching || super.isClientError(e))
-	            .map(e -> e instanceof ExceptionWhileDataFetching ? new SanitizedError((ExceptionWhileDataFetching) e) : e)
-	            .collect(Collectors.toList());
 	}
 
 	private static GraphQLSchema buildSchema() {
