@@ -10,7 +10,10 @@ import graphql.servlet.*;
 @WebServlet(urlPatterns = "/graphql")
 public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	// TODO add support for subscriptions?
-	// TODO consider error handling (i.e. sanitizing of exceptions) 
+	// TODO https://github.com/graphql-java/graphql-java-subscription-example
+	// TODO consider error handling (i.e. sanitizing of exceptions)
+	// TODO use avoid using graphql-java-tools?
+	// TODO https://github.com/graphql-java/graphql-java-http-example
 	private static final long serialVersionUID = 7727407048958240998L;
 	private static final LinkRepository linkRepository;
 	private static final UserRepository userRepository;
