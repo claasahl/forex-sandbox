@@ -1,6 +1,7 @@
 package com.graphql.sample;
 
 import static graphql.schema.idl.RuntimeWiring.*;
+import java.io.InputStreamReader;
 import graphql.*;
 import graphql.schema.*;
 import graphql.schema.idl.*;
@@ -8,10 +9,8 @@ import graphql.schema.idl.*;
 public class HelloWorld {
 
 	public static void main(String[] args) {
-		String schema = "type Query{hello: String}";
-
-		SchemaParser schemaParser = new SchemaParser();
-		TypeDefinitionRegistry typeDefinitionRegistry = schemaParser.parse(schema);
+		TypeDefinitionRegistry typeDefinitionRegistry = new SchemaParser()
+				.parse(new InputStreamReader(ClassLoader.getSystemResourceAsStream("schema.graphqls")));
 
 		RuntimeWiring runtimeWiring = newRuntimeWiring()
 				.type("Query", builder -> builder.dataFetcher("hello", new StaticDataFetcher("world")))
