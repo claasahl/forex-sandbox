@@ -1,11 +1,10 @@
 package com.howtographql.hackernews;
 
 import java.time.ZonedDateTime;
-import com.coxautodev.graphql.tools.GraphQLRootResolver;
 import graphql.GraphQLException;
 import graphql.schema.DataFetchingEnvironment;
 
-public class Mutation implements GraphQLRootResolver {
+public class Mutation {
 	private final LinkRepository linkRepository;
 	private final UserRepository userRepository;
 	private final VoteRepository voteRepository;

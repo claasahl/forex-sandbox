@@ -1,10 +1,9 @@
 package com.howtographql.hackernews;
 
 import java.util.List;
-import com.coxautodev.graphql.tools.GraphQLRootResolver;
 import graphql.schema.DataFetchingEnvironment;
 
-public class Query implements GraphQLRootResolver {
+public class Query {
 
 	private final LinkRepository linkRepository;
 
@@ -15,7 +14,7 @@ public class Query implements GraphQLRootResolver {
 	public List<Link> allLinks(LinkFilter filter) {
 		return linkRepository.getAllLinks(filter);
 	}
-	
+
 	public List<Link> allLinks(DataFetchingEnvironment env) {
 		LinkFilter filter = env.getArgument("filter");
 		return allLinks(filter);

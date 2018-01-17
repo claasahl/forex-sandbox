@@ -1,9 +1,8 @@
 package com.howtographql.hackernews;
 
-import com.coxautodev.graphql.tools.GraphQLResolver;
 import graphql.schema.DataFetchingEnvironment;
 
-public class VoteResolver implements GraphQLResolver<Vote> {
+public class VoteResolver {
 	private final LinkRepository linkRepository;
 	private final UserRepository userRepository;
 
