@@ -22,12 +22,24 @@ public class Mutation implements GraphQLRootResolver {
 		return linkRepository.saveLink(newLink);
 	}
 
+	public Link createLink(DataFetchingEnvironment env) {
+		String url = env.getArgument("url");
+		String description = env.getArgument("description");
+		return createLink(url, description, env);
+	}
+
 	public User createUser(String name, AuthData auth) {
 		User newUser = new User(name, auth.getEmail(), auth.getPassword());
 		return userRepository.saveUser(newUser);
 	}
 
-	public SigninPayload signinUser(AuthData auth) throws IllegalAccessException {
+	public User createUser(DataFetchingEnvironment env) {
+		String name = env.getArgument("name");
+		AuthData auth = env.getArgument("env");
+		return createUser(name, auth);
+	}
+
+	public SigninPayload signinUser(AuthData auth) {
 		User user = userRepository.findByEmail(auth.getEmail());
 		if (user.getPassword().equals(auth.getPassword())) {
 			// TODO consider using: https://jwt.io
@@ -36,15 +48,25 @@ public class Mutation implements GraphQLRootResolver {
 		}
 		throw new GraphQLException("Invalid credentials");
 	}
-	
+
+	public SigninPayload signinUser(DataFetchingEnvironment env) {
+		AuthData auth = env.getArgument("auth");
+		return signinUser(auth);
+	}
+
 	public Vote createVote(int linkId, DataFetchingEnvironment env) {
 		AuthContext context = env.getContext();
 		int userId = context.getUser().map(User::getId).orElse(-1);
-		if(userId >= 0) {
+		if (userId >= 0) {
 			ZonedDateTime createdAt = ZonedDateTime.now();
 			Vote vote = new Vote(createdAt, userId, linkId);
 			return voteRepository.saveVote(vote);
 		}
 		throw new GraphQLException("not signed in");
+	}
+
+	public Vote createVote(DataFetchingEnvironment env) {
+		int linkId = env.getArgument("linkId");
+		return createVote(linkId, env);
 	}
 }
