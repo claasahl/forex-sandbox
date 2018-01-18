@@ -11,21 +11,13 @@ public class VoteResolver {
 		this.userRepository = userRepository;
 	}
 
-	public User user(Vote vote) {
-		return userRepository.findById(vote.getUserId());
-	}
-	
 	public User user(DataFetchingEnvironment env) {
 		Vote vote = env.getSource();
-		return user(vote);
+		return userRepository.findById(vote.getUserId());
 	}
 
-	public Link link(Vote vote) {
-		return linkRepository.findById(vote.getLinkId());
-	}
-	
 	public Link link(DataFetchingEnvironment env) {
 		Vote vote = env.getSource();
-		return link(vote);
+		return linkRepository.findById(vote.getLinkId());
 	}
 }

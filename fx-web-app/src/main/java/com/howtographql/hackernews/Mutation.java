@@ -15,30 +15,23 @@ public class Mutation {
 		this.voteRepository = voteRepository;
 	}
 
-	public Link createLink(String url, String description, DataFetchingEnvironment env) {
+	public Link createLink(DataFetchingEnvironment env) {
+		String url = env.getArgument("url");
+		String description = env.getArgument("description");
 		AuthContext context = env.getContext();
 		Link newLink = new Link(url, description, context.getUser().map(User::getId).orElse(-1));
 		return linkRepository.saveLink(newLink);
 	}
 
-	public Link createLink(DataFetchingEnvironment env) {
-		String url = env.getArgument("url");
-		String description = env.getArgument("description");
-		return createLink(url, description, env);
-	}
-
-	public User createUser(String name, AuthData auth) {
+	public User createUser(DataFetchingEnvironment env) {
+		String name = env.getArgument("name");
+		AuthData auth = env.getArgument("env");
 		User newUser = new User(name, auth.getEmail(), auth.getPassword());
 		return userRepository.saveUser(newUser);
 	}
 
-	public User createUser(DataFetchingEnvironment env) {
-		String name = env.getArgument("name");
-		AuthData auth = env.getArgument("env");
-		return createUser(name, auth);
-	}
-
-	public SigninPayload signinUser(AuthData auth) {
+	public SigninPayload signinUser(DataFetchingEnvironment env) {
+		AuthData auth = env.getArgument("auth");
 		User user = userRepository.findByEmail(auth.getEmail());
 		if (user.getPassword().equals(auth.getPassword())) {
 			// TODO consider using: https://jwt.io
@@ -48,12 +41,8 @@ public class Mutation {
 		throw new GraphQLException("Invalid credentials");
 	}
 
-	public SigninPayload signinUser(DataFetchingEnvironment env) {
-		AuthData auth = env.getArgument("auth");
-		return signinUser(auth);
-	}
-
-	public Vote createVote(int linkId, DataFetchingEnvironment env) {
+	public Vote createVote(DataFetchingEnvironment env) {
+		int linkId = env.getArgument("linkId");
 		AuthContext context = env.getContext();
 		int userId = context.getUser().map(User::getId).orElse(-1);
 		if (userId >= 0) {
@@ -62,10 +51,5 @@ public class Mutation {
 			return voteRepository.saveVote(vote);
 		}
 		throw new GraphQLException("not signed in");
-	}
-
-	public Vote createVote(DataFetchingEnvironment env) {
-		int linkId = env.getArgument("linkId");
-		return createVote(linkId, env);
 	}
 }

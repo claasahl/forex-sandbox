@@ -9,15 +9,11 @@ public class LinkResolver {
 		this.userRepository = userRepository;
 	}
 
-	public User postedBy(Link link) {
+	public User postedBy(DataFetchingEnvironment env) {
+		Link link = env.getSource();
 		if (link.getUserId() <= 0) {
 			return null;
 		}
 		return userRepository.findById(link.getUserId());
-	}
-
-	public User postedBy(DataFetchingEnvironment env) {
-		Link link = env.getSource();
-		return postedBy(link);
 	}
 }
