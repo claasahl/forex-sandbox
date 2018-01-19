@@ -1,6 +1,6 @@
 package com.howtographql.hackernews;
 
-import java.util.List;
+import java.util.*;
 import graphql.schema.DataFetchingEnvironment;
 
 public class Query {
@@ -11,7 +11,15 @@ public class Query {
 	}
 
 	public List<Link> allLinks(DataFetchingEnvironment env) {
-		LinkFilter filter = env.getArgument("filter");
+		//
+		// The graphql specification dictates that input object arguments MUST
+		// be maps. You can convert them to POJOs inside the data fetcher if that
+		// suits your code better
+		//
+		// See http://facebook.github.io/graphql/October2016/#sec-Input-Objects
+		//
+		Map<String, Object> filterMap = env.getArgument("filter");
+		LinkFilter filter = LinkFilter.fromMap(filterMap);
 		return linkRepository.getAllLinks(filter);
 	}
 }

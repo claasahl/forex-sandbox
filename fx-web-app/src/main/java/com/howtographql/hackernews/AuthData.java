@@ -1,5 +1,7 @@
 package com.howtographql.hackernews;
 
+import java.util.Map;
+
 public class AuthData {
     private String email;
     private String password;
@@ -31,5 +33,13 @@ public class AuthData {
 	@Override
 	public String toString() {
 		return "AuthData [email=" + email + ", password=" + password + "]";
+	}
+	
+	public static AuthData fromMap(Map<String, Object> map) {
+		if(map == null)
+			return null;
+		String email = (String) map.get("email");
+	    String password = (String) map.get("password");
+	    return new AuthData(email, password);
 	}
 }
