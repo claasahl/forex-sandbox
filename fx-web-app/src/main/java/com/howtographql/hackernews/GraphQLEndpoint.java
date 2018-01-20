@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.util.Optional;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import graphql.execution.*;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.*;
 import graphql.servlet.*;
@@ -27,7 +28,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	}
 
 	public GraphQLEndpoint() {
-		super(buildSchema());
+		super(buildSchema(), executionStrategy());
 	}
 
 	@Override
@@ -41,7 +42,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 				.orElse(null);
 		return new AuthContext(user, request, response);
 	}
-
+	
 	private static GraphQLSchema buildSchema() {
 		final String schemaFile = "schema.graphqls";
 		final ClassLoader classLoader = GraphQLEndpoint.class.getClassLoader();
@@ -71,5 +72,9 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 				})
 				.build();
 		return new SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
+	}
+	
+	private static ExecutionStrategyProvider executionStrategy() {
+		return new DefaultExecutionStrategyProvider(new AsyncExecutionStrategy(), new AsyncExecutionStrategy(), new SubscriptionExecutionStrategy());
 	}
 }
