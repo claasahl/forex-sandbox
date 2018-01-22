@@ -32,9 +32,8 @@
     <script src="//cdn.jsdelivr.net/react/15.4.2/react.min.js"></script>
     <script src="//cdn.jsdelivr.net/react/15.4.2/react-dom.min.js"></script>
     
-    <!-- See https://github.com/apollographql/subscriptions-transport-ws -->
-    <script src="//unpkg.com/subscriptions-transport-ws@0.5.4/browser/client.js"></script>
-	<script src="//unpkg.com/graphiql-subscriptions-fetcher@0.0.2/browser/client.js"></script>
+    <!-- ... for custom fetcher -->
+	<script src="//unpkg.com/rxjs/bundles/Rx.min.js"></script>
 
     <!--
       These two files can be found in the npm module, however you may wish to
@@ -132,12 +131,24 @@
           }
         });
       }
-
-      // See https://github.com/apollographql/subscriptions-transport-ws
-      let subscriptionsClient = new window.SubscriptionsTransportWs.SubscriptionClient('ws://localhost:8080/graphql', {
-    	  reconnect: true
-    	});
-      let myCustomFetcher = window.GraphiQLSubscriptionsFetcher.graphQLFetcher(subscriptionsClient, graphQLFetcher);
+      
+      // custom fetcher for subscriptions
+      function hasSubscriptionOperation(graphQlParams) {
+    	console.log(graphQlParams.query);
+    	return graphQlParams.query.startsWith('subscription');
+      };
+      function myGraphQLFetcher(fallbackFetcher) {
+          // This example expects a GraphQL server at the path /graphql.
+          // Change this to point wherever you host your GraphQL server.
+          return function(graphQLParams) {
+        	  if(hasSubscriptionOperation(graphQLParams)) {
+                  return Rx.Observable.of(JSON.stringify(graphQLParams)).concat(Rx.Observable.interval(2000));
+              } else {
+              	  return fallbackFetcher(graphQLParams);
+              }  
+          }
+        }
+      let altGraphQLFetcher = myGraphQLFetcher(graphQLFetcher);
 
       // Render <GraphiQL /> into the body.
       // See the README in the top level of this module to learn more about
@@ -145,7 +156,7 @@
       // additional child elements.
       ReactDOM.render(
         React.createElement(GraphiQL, {
-          fetcher: myCustomFetcher, // See https://github.com/apollographql/subscriptions-transport-ws
+          fetcher: altGraphQLFetcher,
           query: parameters.query,
           variables: parameters.variables,
           operationName: parameters.operationName,
