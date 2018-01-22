@@ -31,6 +31,10 @@
     <script src="//cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js"></script>
     <script src="//cdn.jsdelivr.net/react/15.4.2/react.min.js"></script>
     <script src="//cdn.jsdelivr.net/react/15.4.2/react-dom.min.js"></script>
+    
+    <!-- See https://github.com/apollographql/subscriptions-transport-ws -->
+    <script src="//unpkg.com/subscriptions-transport-ws@0.5.4/browser/client.js"></script>
+	<script src="//unpkg.com/graphiql-subscriptions-fetcher@0.0.2/browser/client.js"></script>
 
     <!--
       These two files can be found in the npm module, however you may wish to
@@ -129,13 +133,19 @@
         });
       }
 
+      // See https://github.com/apollographql/subscriptions-transport-ws
+      let subscriptionsClient = new window.SubscriptionsTransportWs.SubscriptionClient('ws://localhost:8080/graphql', {
+    	  reconnect: true
+    	});
+      let myCustomFetcher = window.GraphiQLSubscriptionsFetcher.graphQLFetcher(subscriptionsClient, graphQLFetcher);
+
       // Render <GraphiQL /> into the body.
       // See the README in the top level of this module to learn more about
       // how you can customize GraphiQL by providing different values or
       // additional child elements.
       ReactDOM.render(
         React.createElement(GraphiQL, {
-          fetcher: graphQLFetcher,
+          fetcher: myCustomFetcher, // See https://github.com/apollographql/subscriptions-transport-ws
           query: parameters.query,
           variables: parameters.variables,
           operationName: parameters.operationName,
