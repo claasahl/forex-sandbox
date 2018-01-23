@@ -142,7 +142,11 @@
           // Change this to point wherever you host your GraphQL server.
           return function(graphQLParams) {
         	  if(hasSubscriptionOperation(graphQLParams)) {
-                  return Rx.Observable.of(JSON.stringify(graphQLParams)).concat(Rx.Observable.interval(2000));
+        		  const p = JSON.stringify(graphQLParams);
+        		  let bla = Rx.Observable.of(p).concat(Rx.Observable.interval(2000));
+        		  let wsSubject = Rx.Observable.webSocket('ws://localhost:8080/graphql');
+        		  wsSubject.next(p);
+                  return wsSubject.merge(bla);
               } else {
               	  return fallbackFetcher(graphQLParams);
               }  
