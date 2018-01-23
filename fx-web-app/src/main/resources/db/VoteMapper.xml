@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.howtographql.hackernews.VoteMapper">
+	<resultMap type="Vote" id="voteMap">
+		<constructor>
+			<idArg javaType="_int" column="id" />
+			<arg javaType="java.time.ZonedDateTime" column="created_at" />
+			<arg javaType="_int" column="user_id" />
+			<arg javaType="_int" column="link_id" />
+		</constructor>
+	</resultMap>
+	<insert id="create" useGeneratedKeys="true" keyProperty="id">
+		insert into Vote (created_at,user_id,link_id) values (#{createdAt},#{userId},#{linkId})
+	</insert>
+	<select id="read" resultMap="voteMap">
+		select * from Vote where id = #{id}
+	</select>
+	<select id="readByUserId" resultMap="voteMap">
+		select * from Vote where user_id = #{user_id}
+	</select>
+	<select id="readByLinkId" resultMap="voteMap">
+		select * from Vote where link_id = #{link_id}
+	</select>
+	<select id="readAll" resultMap="voteMap">
+		select * from Vote
+	</select>
+	<update id="update">
+		update Vote set
+		created_at = #{createdAt},
+		user_id = #{userId},
+		link_id = #{linkId}
+		where id = #{id}
+	</update>
+	<delete id="delete">
+		delete from Vote where id = #{id}
+	</delete>
+</mapper>

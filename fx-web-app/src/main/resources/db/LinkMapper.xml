@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.howtographql.hackernews.LinkMapper">
+	<resultMap type="Link" id="linkMap">
+		<constructor>
+			<idArg javaType="_int" column="id" />
+			<arg javaType="String" column="url" />
+			<arg javaType="String" column="description" />
+			<arg javaType="_int" column="user_id" />
+		</constructor>
+	</resultMap>
+	<insert id="create" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into Link
+		(url,description,user_id) values
+		(#{url},#{description},#{userId})
+	</insert>
+	<select id="read" resultMap="linkMap">
+		select * from Link where id = #{id}
+	</select>
+	<select id="readAll" resultMap="linkMap">
+		select * from Link where 1=1
+		<choose>
+			<when test="descriptionContains != null">
+				and description like concat('%', #{descriptionContains}, '%')
+			</when>
+		</choose>
+		<choose>
+			<when test="urlContains != null">
+				and url like concat('%', #{urlContains}, '%')
+			</when>
+		</choose>
+	</select>
+	<update id="update">
+		update Link set
+		url = #{url},
+		description =
+		#{description},
+		user_id = #{user_id}
+		where id = #{id}
+	</update>
+	<delete id="delete">
+		delete from Link where id = #{id}
+	</delete>
+</mapper>

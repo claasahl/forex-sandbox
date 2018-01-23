@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.howtographql.hackernews.UserMapper">
+	<resultMap type="User" id="userMap">
+		<constructor>
+			<idArg javaType="_int" column="id" />
+			<arg javaType="String" column="name" />
+			<arg javaType="String" column="email" />
+			<arg javaType="String" column="password" />
+			<arg javaType="String" column="token" />
+		</constructor>
+	</resultMap>
+	<insert id="create" useGeneratedKeys="true" keyProperty="id">
+		insert into User (name,email,password,token) values (#{name},#{email},#{password},#{token})
+	</insert>
+	<select id="read" resultMap="userMap">
+		select * from User where id = #{id}
+	</select>
+	<select id="readByEmail" resultMap="userMap">
+		select * from User where email = #{email}
+	</select>
+	<select id="readByToken" resultMap="userMap">
+		select * from User where token = #{token}
+	</select>
+	<select id="readAll" resultMap="userMap">
+		select * from User
+	</select>
+	<update id="update">
+		update User set
+		name = #{name},
+		email = #{email},
+		password = #{password},
+		token = #{token}
+		where id = #{id}
+	</update>
+	<delete id="delete">
+		delete from User where id = #{id}
+	</delete>
+</mapper>
