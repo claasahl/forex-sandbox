@@ -19,7 +19,11 @@ public class Subscription {
 		AtomicReference<Disposable> disposable = new AtomicReference<>();
 		return links
 				.doOnSubscribe(d -> disposable.set(linkGenerator.subscribe()))
-				.doOnDispose(disposable.get()::dispose)
+				.doOnDispose(() -> disposable.updateAndGet(d -> {
+					if(d != null)
+						d.dispose();
+					return null;
+				}))
 				.toFlowable(BackpressureStrategy.BUFFER);
 	}
 }
