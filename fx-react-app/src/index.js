@@ -5,7 +5,7 @@ import './index.css';
 
 function Square(props) {
     return (
-        <button className="square" onClick={() => props.onClick()}>
+        <button className="square" onClick={props.onClick}>
             {props.value}
         </button>
     );
@@ -16,6 +16,7 @@ function Square(props) {
         super(props);
         this.state = {
             squares: Array(9).fill(null),
+            xIsNext: true,
         };
     }
 
@@ -27,14 +28,17 @@ function Square(props) {
         );
     }
 
-    handleClick(i) {
-        const squares = this.state.squares.slice();
-        squares[i] = "Y";
-        this.setState({squares: squares});
-    }
+      handleClick(i) {
+          const squares = this.state.squares.slice();
+          squares[i] = this.state.xIsNext ? "X" : "O";
+          this.setState({
+              squares: squares,
+              xIsNext: !this.state.xIsNext,
+          });
+      }
   
     render() {
-      const status = 'Next player: X';
+      const status = 'Next player: ' + (this.state.xIsNext ? "X" : "O");
   
       return (
         <div>
