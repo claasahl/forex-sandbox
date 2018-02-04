@@ -1,7 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
+import {
+    Environment,
+    Network,
+    RecordSource,
+    Store,
+  } from 'relay-runtime';
+import {
+    graphql,
+    QueryRenderer
+} from 'react-relay';
+  
+  function fetchQuery(
+    operation,
+    variables,
+  ) {
+    return fetch('http://localhost:8080/graphql', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: operation.text,
+        variables,
+      }),
+    }).then(response => {
+      return response.json();
+    });
+  }
+  
+  const environment = new Environment({
+    network: Network.create(fetchQuery),
+    store: new Store(new RecordSource()),  
+  });
 
 function Square(props) {
     return (
@@ -158,9 +190,44 @@ class Game extends React.Component {
     }
 }
 
+class TestReactRelayApp extends React.Component {
+    render() {
+        return (
+            <QueryRenderer
+              environment={environment}
+              query={graphql`
+              query srcAllLinksQuery {
+                allLinks {
+                  id
+                  url
+                  description
+                  postedBy {
+                    id
+                    name
+                  }
+                }
+              }              
+              `}
+              variables={{}}
+              render={({error, props}) => {
+                if (error) {
+                  return <div>Error!{error.message}</div>;
+                }
+                if (!props) {
+                  return <div>Loading...</div>;
+                }
+                return <div>User ID: {props.viewer.id}</div>;
+              }}
+            />
+          );
+    }
+}
+
 // ========================================
 
 ReactDOM.render(
-    <Game />,
+    <div>
+        <TestReactRelayApp />
+    </div>,
     document.getElementById('root')
 );
