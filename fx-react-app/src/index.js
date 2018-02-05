@@ -16,18 +16,7 @@ import {
     operation,
     variables,
   ) {
-    return fetch('http://localhost:8080/graphql', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: operation.text,
-        variables,
-      }),
-    }).then(response => {
-      return response.json();
-    });
+    return {"data":{"allLinks":[{"id":"1","url":"http://google.com","description":"g00gle","postedBy":null}]}};
   }
   
   const environment = new Environment({
@@ -216,7 +205,7 @@ class TestReactRelayApp extends React.Component {
                 if (!props) {
                   return <div>Loading...</div>;
                 }
-                return <div>User ID: {props.viewer.id}</div>;
+                return <div>User ID: {JSON.stringify(props)}</div>;
               }}
             />
           );
