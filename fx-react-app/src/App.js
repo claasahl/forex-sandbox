@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
@@ -11,7 +11,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <ApolloProvider client={client}>
