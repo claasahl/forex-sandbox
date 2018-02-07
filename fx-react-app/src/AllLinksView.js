@@ -22,14 +22,17 @@ class AllLinksView extends React.Component {
     if(data.loading) {
       return <div>Loading ...</div>
     }
-    let {allLinks} = data;
+    let {allLinks, refetch} = data;
     return (
       <div>
+        <button onClick={() => refetch()}>
+          Refresh
+        </button>
         <ul>
           {allLinks && allLinks.map(link => (
-            <a key={link.id} href={link.url}>
-              {link.description}
-            </a>
+            <li key={link.id}>
+              <a href={link.url}>{link.description}</a>
+            </li>
           ))}
         </ul>
       </div>
