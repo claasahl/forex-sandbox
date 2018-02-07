@@ -22,4 +22,9 @@ public class Query {
 		LinkFilter filter = LinkFilter.fromMap(filterMap);
 		return linkRepository.getAllLinks(filter);
 	}
+	
+	public Link oneLink(DataFetchingEnvironment env) {
+		String id = env.getArgument("id");
+		return linkRepository.findById(Integer.parseInt(id));
+	}
 }

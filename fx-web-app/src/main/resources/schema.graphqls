@@ -6,6 +6,7 @@ schema {
 
 type Query {
 	allLinks(filter: LinkFilter): [Link]
+	oneLink(id: ID!): Link
 }
 
 type Mutation {

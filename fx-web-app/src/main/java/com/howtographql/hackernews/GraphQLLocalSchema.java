@@ -24,7 +24,12 @@ public class GraphQLLocalSchema {
 				.parse(new InputStreamReader(classLoader.getResourceAsStream(schemaFile)));
 		RuntimeWiring wiring = RuntimeWiring.newRuntimeWiring()
 				.scalar(Scalars.dateTime)
-				.type("Query", typeWiring -> typeWiring.dataFetcher("allLinks", new Query(linkRepository)::allLinks))
+				.type("Query", typeWiring -> { 
+					Query query = new Query(linkRepository);
+					typeWiring.dataFetcher("allLinks", query::allLinks)
+							.dataFetcher("oneLink", query::oneLink);
+					return typeWiring;
+				})
 				.type("Mutation", typeWiring -> {
 					Mutation mutation = new Mutation(linkRepository, userRepository, voteRepository);
 					typeWiring.dataFetcher("createUser", mutation::createUser)
