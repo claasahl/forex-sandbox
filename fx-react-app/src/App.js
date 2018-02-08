@@ -7,6 +7,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import AllLinksView from './AllLinksView';
 import HomeView from './HomeView';
 import CreateLinkView from './CreateLinkView';
+import DetailLinkView from './DetailLinkView';
 import { BrowserRouter, Route, Link, Router } from 'react-router-dom'
 
 const client = new ApolloClient({
@@ -28,6 +29,7 @@ class App extends React.Component {
             <Route exact path="/" component={HomeView}/>
             <Route exact path="/allLinks" component={AllLinksView}/>
             <Route exact path="/createLink" component={CreateLinkView}/>
+            <Route path="/links/:id" component={DetailLinkView}/>
           </div>
         </BrowserRouter>
       </ApolloProvider>
