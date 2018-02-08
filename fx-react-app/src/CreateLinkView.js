@@ -2,6 +2,15 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
+const query = gql`
+query AllLinksViewQuery {
+    allLinks {
+        id
+        url
+        description
+    }
+}
+`;
 const mutation = gql`
 mutation CreateLinkView_createLink($url: String!, $desc: String!) {
     createLink(url: $url, description: $desc) {
@@ -20,10 +29,13 @@ class CreateLinkView extends React.Component {
                 url: formData.get('url'),
                 desc: formData.get('description'),
             },
+            refetchQueries: [
+                { query },
+            ],
         })
         .then(res => {
             let {data} = res;
-            window.location.replace('/links/' + data.createLink.id);
+            this.props.history.push('/links/' + data.createLink.id);
         })
         .catch(err => console.log(err));
     }

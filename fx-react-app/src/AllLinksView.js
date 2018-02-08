@@ -9,10 +9,6 @@ query AllLinksViewQuery {
     id
     url
     description
-    postedBy {
-      id
-      name
-    }
   }
 }
 `;
