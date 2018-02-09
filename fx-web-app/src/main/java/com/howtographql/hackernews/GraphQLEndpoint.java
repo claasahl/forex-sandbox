@@ -1,11 +1,9 @@
 package com.howtographql.hackernews;
 
 import java.util.Optional;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import graphql.servlet.*;
 
-@WebServlet(urlPatterns = "/graphql")
 public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	// TODO add support for subscriptions?
 	// TODO https://github.com/graphql-java/graphql-java-subscription-example
