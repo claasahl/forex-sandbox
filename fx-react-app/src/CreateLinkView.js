@@ -11,15 +11,6 @@ query AllLinksViewQuery {
     }
 }
 `;
-const query2 = gql`
-query DetailLinkView($id: ID!) {
-    oneLink(id: $id) {
-        id
-        url
-        description
-    }
-}
-`;
 const mutation = gql`
 mutation CreateLinkView_createLink($url: String!, $desc: String!) {
     createLink(url: $url, description: $desc) {
@@ -43,15 +34,7 @@ class CreateLinkView extends React.Component {
             update: (proxy, { data: { createLink } }) => {
                 const data = proxy.readQuery({ query: query });
                 data.allLinks.push(createLink);
-                proxy.writeQuery({ query: query, data: data})
-
-                proxy.writeQuery({
-                    query: query2,
-                    variables: {
-                        id: createLink.id,
-                    },
-                    data: {oneLink: createLink},
-                });
+                proxy.writeQuery({ query: query, data: data});
             },
         })
         .then(res => {
