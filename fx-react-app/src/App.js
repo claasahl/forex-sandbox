@@ -9,7 +9,7 @@ import AllLinksView from './AllLinksView';
 import HomeView from './HomeView';
 import CreateLinkView from './CreateLinkView';
 import DetailLinkView from './DetailLinkView';
-import { BrowserRouter, Route, Link, Router } from 'react-router-dom'
+import { BrowserRouter, Route, Link } from 'react-router-dom'
 
 const cache = new InMemoryCache({
   cacheResolvers: {
