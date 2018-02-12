@@ -10,6 +10,14 @@
 		<servlet-name>graphql-http</servlet-name>
 		<url-pattern>/graphql</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>graphql-forex</servlet-name>
+		<servlet-class>org.github.claasahl.forex.graphql.GraphQLEndpoint</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>graphql-forex</servlet-name>
+		<url-pattern>/fx/graphql</url-pattern>
+	</servlet-mapping>
 	<filter>
 		<filter-name>cross-origin</filter-name>
 		<filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
