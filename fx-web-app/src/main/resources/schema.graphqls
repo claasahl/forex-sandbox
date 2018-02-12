@@ -7,8 +7,11 @@ schema {
 type Query {
 	allLinks(filter: LinkFilter): [Link]
 	oneLink(id: ID!): Link
-	candles(filter: CandleFilter): [Candle]
-	rates(filter: RateFilter): [Rate]
+	brokers: [Broker!]!
+	orders(filter: OrderFilter): [Order!]
+	positions(filter: PositionFilter): [Position!]!
+	candles(filter: CandleFilter): [Candle!]!
+	rates(filter: RateFilter): [Rate!]!
 }
 
 type Mutation {
@@ -60,7 +63,36 @@ type Vote {
 
 scalar DateTime
 
+type Broker {
+	id: ID!
+	name: String!
+	symbols: [Symbol!]!
+}
+
+type SymbolSummary {
+	id: ID!
+	symbol: String!
+	duration: Int
+}
+
+input OrderFilter {
+	broker: ID
+}
+
+type Order {
+	id: ID!
+}
+
+input PositionFilter {
+	broker: ID
+}
+
+type Position {
+	id: ID!
+}
+
 input CandleFilter {
+	broker: ID!
 	symbol: String!
 	duration: Int!
 }
@@ -112,6 +144,7 @@ type Candle {
 }
 
 input RateFilter {
+	broker: ID!
 	symbol: String!
 }
 
