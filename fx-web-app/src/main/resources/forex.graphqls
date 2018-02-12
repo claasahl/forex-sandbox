@@ -1,0 +1,122 @@
+schema {
+    query: Query
+}
+
+type Query {
+	brokers: [Broker!]!
+	orders(filter: OrderFilter): [Order!]
+	positions(filter: PositionFilter): [Position!]!
+	candles(filter: CandleFilter): [Candle!]!
+	rates(filter: RateFilter): [Rate!]!
+}
+
+scalar DateTime
+
+type Broker {
+	id: ID!
+	name: String!
+	symbols: [Symbol!]!
+}
+
+type SymbolSummary {
+	id: ID!
+	symbol: String!
+	duration: Int
+}
+
+input OrderFilter {
+	broker: ID
+}
+
+type Order {
+	id: ID!
+}
+
+input PositionFilter {
+	broker: ID
+}
+
+type Position {
+	id: ID!
+}
+
+input CandleFilter {
+	broker: ID!
+	symbol: String!
+	duration: Int!
+}
+
+type Candle {
+	# the symbol (e.g. "EURUSD") of this candle. It represents the name of the product or
+	# financial instrument for which the prices were observed.
+	symbol: String!
+	
+	# the date and time of this candle. The instantaneous point on the
+	# time-line at which this candle was opened. Not to be confused with the
+	# instantaneous point at which opening price was observed. This candle's
+	# opening price may have been observed before this point.
+	dateTime: DateTime!
+	
+	# the duration of this candle. The amount of time that elapsed between
+	# the opening and closing time of this candle. Not to be confused with the
+	# instantaneous point on the time-line at which closing price was observed.
+	# This candle's closing price may have been observed before this duration has
+	# elapsed.
+	duration: Int!
+	
+	# the opening price of this candle. It represents the price that was
+	# valid at the opening time. This value is free to move within the upper and
+	# lower boundaries (i.e. high price and low price, respectively).
+	open: Float!
+	
+	# the high price of this candle. It represents the highest price that
+	# was observed during the lifetime of this candle (i.e. between its opening and
+	# closing time). The value also represents the upper boundary of this candle.
+	# Naturally, opening price, low price and closing price must all be less or
+	# equal.
+	high: Float!
+	
+	# the low price of this candle. It represents the lowest price that was
+	# observed during the lifetime of this candle (i.e. between its opening and
+	# closing time). The value also represents the lower boundary of this candle.
+	# Naturally, opening price, high price and closing price must all be greater or
+	# equal.
+	low: Float!
+	
+	# the closing price of this candle. It represents the price that was
+	# valid at the closing time. This value is free to move within the upper and
+	# lower boundaries (i.e. high price and low price, respectively).
+	close: Float!
+	
+	# the volume of this candle.
+	volume: Int!
+}
+
+input RateFilter {
+	broker: ID!
+	symbol: String!
+}
+
+type Rate {
+	# the symbol of this rate. It represents the name of the product or
+	# financial instrument for which the prices were observed.
+	symbol: String!
+	
+	# the date and time of this rate. The instantaneous point on the
+	# time-line at which this rate was observed.
+	dateTime: DateTime!
+	
+	# the bid price of this rate. It represents the price at which the
+	# market is prepared to buy a product (i.e. the price at which a trader can
+	# sell a product).
+	bid: Float!
+
+	# the ask price of this rate. It represents the price at which the
+	# market is prepared to sell a product (i.e. the price at which a trader can
+	# buy a product). The ask price is also known as the offer.	
+	ask: Float!
+	
+	# the spread this rate. It represents the difference between the bid
+	# price and the ask price.
+	spread: Float
+}
