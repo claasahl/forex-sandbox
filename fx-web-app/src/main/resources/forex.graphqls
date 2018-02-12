@@ -12,6 +12,8 @@ type Query {
 
 scalar DateTime
 
+scalar Duration
+
 type Broker {
 	id: ID!
 	name: String!
@@ -20,8 +22,8 @@ type Broker {
 
 type Symbol {
 	id: ID!
-	symbol: String!
-	duration: Int
+	name: String!
+	duration: Duration!
 }
 
 input OrderFilter {

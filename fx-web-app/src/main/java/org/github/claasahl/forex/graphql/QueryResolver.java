@@ -1,11 +1,18 @@
 package org.github.claasahl.forex.graphql;
 
 import java.util.*;
+import org.github.claasahl.forex.database.BrokerRepository;
 import org.github.claasahl.forex.model.Broker;
 import graphql.schema.DataFetchingEnvironment;
 
-public class QueryResolver {
+class QueryResolver {
+	private final BrokerRepository brokerRepository;
+	
+	public QueryResolver(BrokerRepository brokerRepository) {
+		this.brokerRepository = brokerRepository;
+	}
+	
 	public List<Broker> getBrokers(DataFetchingEnvironment environment) {
-		return Collections.emptyList();
+		return brokerRepository.getBrokers();
 	}
 }
