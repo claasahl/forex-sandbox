@@ -13,6 +13,7 @@
 
 		<module>playground</module>
 		<module>fx-web-app</module>
+		<module>fx-web-frontend</module>
 	</modules>
 
 	<build>
