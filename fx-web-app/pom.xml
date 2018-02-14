@@ -39,6 +39,11 @@
 			<version>9.4.8.v20171121</version>
 		</dependency>
 		<dependency>
+			<groupId>org.github.claasahl.forex</groupId>
+			<artifactId>fx-web-frontend</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>io.reactivex.rxjava2</groupId>
 			<artifactId>rxjava</artifactId>
 			<version>${version.io.reactivex.rxjava2.rxjava}</version>
