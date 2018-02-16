@@ -1,20 +1,29 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
+import React from "react";
+import "graphiql/graphiql.css";
 import "./App.css";
+import Graphiql from "graphiql";
 
-class App extends Component {
+class App extends React.Component {
+  graphQLFetcher(graphQLParams) {
+    return fetch(this.props.fetchURL, {
+      method: "post",
+      body: JSON.stringify(graphQLParams),
+      credentials: "include",
+    })
+      .then(function(response) {
+        return response.text();
+      })
+      .then(function(responseBody) {
+        try {
+          return JSON.parse(responseBody);
+        } catch (error) {
+          return responseBody;
+        }
+      });
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+    return <Graphiql fetcher={this.graphQLFetcher.bind(this)} />;
   }
 }
 
