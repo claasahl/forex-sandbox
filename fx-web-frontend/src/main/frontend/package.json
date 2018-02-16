@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "graphiql": "^0.11.11",
-     "graphql": "^0.12.3",
+    "graphql": "^0.11.7",
     "husky": "^0.14.3",
     "lint-staged": "^6.0.0",
     "prettier": "^1.10.2",
