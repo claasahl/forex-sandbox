@@ -11,6 +11,8 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	private static final long serialVersionUID = -407893796327589811L;
 	private static final BrokerRepository BROKER_REPOSITORY = new BrokerRepository();
 	private static final SymbolRepository SYMBOL_REPOSITORY = new SymbolRepository();
+	private static final CandleRepository CANDLE_REPOSITORY = new CandleRepository();
+	private static final RateRepository RATE_REPOSITORY = new RateRepository();
 
 	public GraphQLEndpoint() {
 		super(buildSchema());
@@ -40,8 +42,11 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	}
 
 	private static Builder wiringForQuery(Builder builder) {
-		QueryResolver query = new QueryResolver(BROKER_REPOSITORY);
-		return builder.dataFetcher("brokers", query::getBrokers);
+		QueryResolver query = new QueryResolver(BROKER_REPOSITORY, CANDLE_REPOSITORY, RATE_REPOSITORY);
+		return builder
+				.dataFetcher("brokers", query::getBrokers)
+				.dataFetcher("candles", query::getCandles)
+				.dataFetcher("rates", query::getRates);
 	}
 
 	private static Builder wiringForBroker(Builder builder) {
