@@ -2,31 +2,25 @@ package org.github.claasahl.forex.graphql;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import graphql.language.StringValue;
 import graphql.schema.*;
 
 public class Scalars {
 
-	public static GraphQLScalarType dateTime = new GraphQLScalarType("DateTime", "DataTime scalar", new Coercing() {
+	public static GraphQLScalarType dateTime = new GraphQLScalarType("DateTime", "DataTime scalar", new Coercing<OffsetDateTime, String>() {
 		@Override
 		public String serialize(Object input) {
 			// serialize the ZonedDateTime into string on the way out
-			return ((ZonedDateTime) input).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+			return ((OffsetDateTime) input).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 		}
 
 		@Override
-		public Object parseValue(Object input) {
-			return serialize(input);
+		public OffsetDateTime parseValue(Object input) {
+			return OffsetDateTime.parse(input.toString());
 		}
 
 		@Override
-		public ZonedDateTime parseLiteral(Object input) {
-			// parse the string values coming in
-			if (input instanceof StringValue) {
-				return ZonedDateTime.parse(((StringValue) input).getValue());
-			} else {
-				return null;
-			}
+		public OffsetDateTime parseLiteral(Object input) {
+			return OffsetDateTime.parse(input.toString());
 		}
 	});
 	

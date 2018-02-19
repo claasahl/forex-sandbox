@@ -8,6 +8,8 @@ public class RateRepository {
 
 	public RateRepository() {
 		rates = new ArrayList<>();
+		rates.add(new InternalRate.Builder().setSymbol("EURUSD").setBid(1.1).setAsk(1.5).build());
+		rates.add(new InternalRate.Builder().setSymbol("EURUSD").build());
 	}
 
 	public List<Rate> getRates() {

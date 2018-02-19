@@ -64,7 +64,7 @@ type Candle {
 	# instantaneous point on the time-line at which closing price was observed.
 	# This candle's closing price may have been observed before this duration has
 	# elapsed.
-	duration: Int!
+	duration: Duration!
 	
 	# the opening price of this candle. It represents the price that was
 	# valid at the opening time. This value is free to move within the upper and
