@@ -38,6 +38,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 				.scalar(Scalars.duration)
 				.type("Query", GraphQLEndpoint::wiringForQuery)
 				.type("Broker", GraphQLEndpoint::wiringForBroker)
+				.type("Rate", GraphQLEndpoint::wiringForRate)
 				.build();
 	}
 
@@ -52,5 +53,10 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	private static Builder wiringForBroker(Builder builder) {
 		BrokerResolver broker = new BrokerResolver(SYMBOL_REPOSITORY);
 		return builder.dataFetcher("symbols", broker::getSymbols);
+	}
+	
+	private static Builder wiringForRate(Builder builder) {
+		RateResolver rate = new RateResolver();
+		return builder.dataFetcher("spread", rate::getSpread);
 	}
 }
