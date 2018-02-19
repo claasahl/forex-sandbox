@@ -22,7 +22,12 @@ type Broker {
 
 type Symbol {
 	id: ID!
+	broker: Broker!
+	# the name (e.g. "EURUSD") of this product or financial instrument
 	name: String!
+	# the duration of this product or financial instrument. In case of candles, 
+	# this is the amount of time that elapsed between the opening and closing time.
+	# In case of rates, this is null.
 	duration: Duration!
 }
 
@@ -51,20 +56,13 @@ input CandleFilter {
 type Candle {
 	# the symbol (e.g. "EURUSD") of this candle. It represents the name of the product or
 	# financial instrument for which the prices were observed.
-	symbol: String!
+	symbol: Symbol!
 	
 	# the date and time of this candle. The instantaneous point on the
 	# time-line at which this candle was opened. Not to be confused with the
 	# instantaneous point at which opening price was observed. This candle's
 	# opening price may have been observed before this point.
 	dateTime: DateTime!
-	
-	# the duration of this candle. The amount of time that elapsed between
-	# the opening and closing time of this candle. Not to be confused with the
-	# instantaneous point on the time-line at which closing price was observed.
-	# This candle's closing price may have been observed before this duration has
-	# elapsed.
-	duration: Duration!
 	
 	# the opening price of this candle. It represents the price that was
 	# valid at the opening time. This value is free to move within the upper and
@@ -102,7 +100,7 @@ input RateFilter {
 type Rate {
 	# the symbol of this rate. It represents the name of the product or
 	# financial instrument for which the prices were observed.
-	symbol: String!
+	symbol: Symbol!
 	
 	# the date and time of this rate. The instantaneous point on the
 	# time-line at which this rate was observed.
