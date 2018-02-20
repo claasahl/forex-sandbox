@@ -38,25 +38,39 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 				.scalar(Scalars.duration)
 				.type("Query", GraphQLEndpoint::wiringForQuery)
 				.type("Broker", GraphQLEndpoint::wiringForBroker)
+				.type("Symbol", GraphQLEndpoint::wiringForSymbol)
+				.type("Candle", GraphQLEndpoint::wiringForCandle)
 				.type("Rate", GraphQLEndpoint::wiringForRate)
 				.build();
 	}
 
 	private static Builder wiringForQuery(Builder builder) {
-		QueryResolver query = new QueryResolver(BROKER_REPOSITORY, CANDLE_REPOSITORY, RATE_REPOSITORY);
+		QueryResolver queryResolver = new QueryResolver(BROKER_REPOSITORY, CANDLE_REPOSITORY, RATE_REPOSITORY);
 		return builder
-				.dataFetcher("brokers", query::getBrokers)
-				.dataFetcher("candles", query::getCandles)
-				.dataFetcher("rates", query::getRates);
+				.dataFetcher("brokers", queryResolver::getBrokers)
+				.dataFetcher("candles", queryResolver::getCandles)
+				.dataFetcher("rates", queryResolver::getRates);
 	}
 
 	private static Builder wiringForBroker(Builder builder) {
-		BrokerResolver broker = new BrokerResolver(SYMBOL_REPOSITORY);
-		return builder.dataFetcher("symbols", broker::getSymbols);
+		BrokerResolver brokerResolver = new BrokerResolver(SYMBOL_REPOSITORY);
+		return builder.dataFetcher("symbols", brokerResolver::getSymbols);
 	}
-	
+
+	private static Builder wiringForSymbol(Builder builder) {
+		SymbolResolver symbolResolver = new SymbolResolver(BROKER_REPOSITORY);
+		return builder.dataFetcher("broker", symbolResolver::getBroker);
+	}
+
+	private static Builder wiringForCandle(Builder builder) {
+		CandleResolver candleResolver = new CandleResolver(SYMBOL_REPOSITORY);
+		return builder.dataFetcher("symbol", candleResolver::getSymbol);
+	}
+
 	private static Builder wiringForRate(Builder builder) {
-		RateResolver rate = new RateResolver();
-		return builder.dataFetcher("spread", rate::getSpread);
+		RateResolver rateResolver = new RateResolver(SYMBOL_REPOSITORY);
+		return builder
+				.dataFetcher("symbol", rateResolver::getSymbol)
+				.dataFetcher("spread", rateResolver::getSpread);
 	}
 }

@@ -11,13 +11,7 @@ import java.time.OffsetDateTime;
  *
  */
 public interface Rate extends Comparable<Rate> {
-	/**
-	 * Returns the symbol of this rate. It represents the name of the product or
-	 * financial instrument for which the prices were observed.
-	 * 
-	 * @return the symbol
-	 */
-	String getSymbol();
+	int getSymbolId();
 
 	/**
 	 * Returns the date and time of this rate. The instantaneous point on the

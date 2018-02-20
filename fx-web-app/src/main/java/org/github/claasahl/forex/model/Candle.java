@@ -11,13 +11,7 @@ import java.time.*;
  *
  */
 public interface Candle extends Comparable<Candle> {
-	/**
-	 * Returns the symbol of this candle. It represents the name of the product or
-	 * financial instrument for which the prices were observed.
-	 * 
-	 * @return the symbol
-	 */
-	String getSymbol();
+	int getSymbolId();
 
 	/**
 	 * Returns the date and time of this candle. The instantaneous point on the

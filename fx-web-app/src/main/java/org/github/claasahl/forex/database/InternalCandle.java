@@ -13,7 +13,7 @@ import org.github.claasahl.forex.model.Candle;
  *
  */
 class InternalCandle implements Candle {
-	private final String symbol;
+	private final int symbolId;
 	private final OffsetDateTime dateTime;
 	private final Duration duration;
 	private final double open;
@@ -29,7 +29,7 @@ class InternalCandle implements Candle {
 	 *            the builder with which the candle is constructed
 	 */
 	InternalCandle(Builder builder) {
-		symbol = builder.symbol;
+		symbolId = builder.symbolId;
 		dateTime = builder.dateTime;
 		duration = builder.duration;
 		open = builder.open;
@@ -40,8 +40,8 @@ class InternalCandle implements Candle {
 	}
 
 	@Override
-	public String getSymbol() {
-		return symbol;
+	public int getSymbolId() {
+		return symbolId;
 	}
 
 	@Override
@@ -81,7 +81,7 @@ class InternalCandle implements Candle {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(symbol, dateTime, duration, open, high, low, close, volume);
+		return Objects.hash(symbolId, dateTime, duration, open, high, low, close, volume);
 	}
 
 	@Override
@@ -91,7 +91,7 @@ class InternalCandle implements Candle {
 		if (!(obj instanceof Candle))
 			return false;
 		Candle other = (Candle) obj;
-		return Objects.equals(symbol, other.getSymbol())
+		return symbolId == other.getSymbolId()
 				&& Objects.equals(dateTime, other.getDateTime())
 				&& Objects.equals(duration, other.getDuration())
 				&& open == other.getOpen()
@@ -103,7 +103,7 @@ class InternalCandle implements Candle {
 
 	@Override
 	public String toString() {
-		return "Candle [symbol=" + symbol + ", dateTime=" + dateTime + ", duration=" + duration + ", open=" + open
+		return "Candle [symbol=" + symbolId + ", dateTime=" + dateTime + ", duration=" + duration + ", open=" + open
 				+ ", high=" + high + ", low=" + low + ", close=" + close + ", volume=" + volume + "]";
 	}
 	
@@ -117,7 +117,7 @@ class InternalCandle implements Candle {
 	 *
 	 */
 	public static final class Builder implements Candle {
-		private String symbol;
+		private int symbolId;
 		private OffsetDateTime dateTime;
 		private Duration duration;
 		private double open;
@@ -129,7 +129,7 @@ class InternalCandle implements Candle {
 		/**
 		 * Creates a {@link Builder} that has been initialized with default values.
 		 * <ul>
-		 * <li>symbol = EURUSD</li>
+		 * <li>symbol = 0</li>
 		 * <li>dateTime = {@link OffsetDateTime#now()}</li>
 		 * <li>duration = 1 hour</li>
 		 * <li>open = 0.0</li>
@@ -140,26 +140,26 @@ class InternalCandle implements Candle {
 		 * <ul>
 		 */
 		public Builder() {
-			symbol = "EURUSD";
+			symbolId = 0;
 			dateTime = OffsetDateTime.now();
 			duration = Duration.ofHours(1);
 		}
 
 		@Override
-		public String getSymbol() {
-			return symbol;
+		public int getSymbolId() {
+			return symbolId;
 		}
 
 		/**
 		 * Sets the symbol of the candle.
 		 * 
-		 * @param symbol
+		 * @param symbolId
 		 *            the symbol
 		 * @return this builder
-		 * @see Candle#getSymbol()
+		 * @see Candle#getSymbolId()
 		 */
-		public Builder setSymbol(String symbol) {
-			this.symbol = symbol;
+		public Builder setSymbolId(int symbolId) {
+			this.symbolId = symbolId;
 			return this;
 		}
 

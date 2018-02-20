@@ -1,6 +1,6 @@
 package org.github.claasahl.forex.graphql;
 
-import java.util.List;
+import java.util.*;
 import org.github.claasahl.forex.database.*;
 import org.github.claasahl.forex.model.*;
 import graphql.schema.DataFetchingEnvironment;
@@ -17,17 +17,17 @@ class QueryResolver {
 		this.rateRepository = rateRepository;
 	}
 
-	public List<Broker> getBrokers(DataFetchingEnvironment environment) {
+	public Collection<Broker> getBrokers(DataFetchingEnvironment environment) {
 		// TODO implement BrokerFilter
 		return brokerRepository.getBrokers();
 	}
 
-	public List<Candle> getCandles(DataFetchingEnvironment environment) {
+	public Collection<Candle> getCandles(DataFetchingEnvironment environment) {
 		// TODO implement CandleFilter
 		return candleRepository.getCandles();
 	}
 
-	public List<Rate> getRates(DataFetchingEnvironment environment) {
+	public Collection<Rate> getRates(DataFetchingEnvironment environment) {
 		// TODO implement RateFilter
 		return rateRepository.getRates();
 	}
