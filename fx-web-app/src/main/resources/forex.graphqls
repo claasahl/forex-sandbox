@@ -28,7 +28,7 @@ type Symbol {
 	# the duration of this product or financial instrument. In case of candles, 
 	# this is the amount of time that elapsed between the opening and closing time.
 	# In case of rates, this is null.
-	duration: Duration!
+	duration: Duration
 }
 
 input OrderFilter {

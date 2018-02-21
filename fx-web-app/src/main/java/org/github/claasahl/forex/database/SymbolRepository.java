@@ -15,7 +15,7 @@ public class SymbolRepository {
 		List<Symbol> symbols = new ArrayList<>();
 		symbols.add(new InternalSymbol(ids.getAndIncrement(), 0, "EURUSD", Duration.ofMinutes(1)));
 		symbols.add(new InternalSymbol(ids.getAndIncrement(), 1, "EURUSD", Duration.ofHours(1)));
-		symbols.add(new InternalSymbol(ids.getAndIncrement(), 1, "EURUSD", Duration.ZERO));
+		symbols.add(new InternalSymbol(ids.getAndIncrement(), 1, "EURUSD", null));
 		this.symbols = symbols.stream().collect(Collectors.toMap(Symbol::getId, Function.identity()));
 	}
 
