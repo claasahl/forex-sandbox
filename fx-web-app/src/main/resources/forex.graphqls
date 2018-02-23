@@ -4,10 +4,10 @@ schema {
 
 type Query {
 	brokers: [Broker!]!
-	orders(filter: OrderFilter): Orders!
-	positions(filter: PositionFilter): Positions!
-	candles(filter: CandleFilter): Candles!
-	rates(filter: RateFilter): Rates!
+	orders(filter: OrderFilter): [Order!]!
+	positions(filter: PositionFilter): [Position!]!
+	candles(filter: CandleFilter): [Candle!]!
+	rates(filter: RateFilter): [Rate!]!
 }
 
 scalar DateTime
@@ -36,13 +36,9 @@ input OrderFilter {
 	broker: ID
 }
 
-type Orders {
-	broker: Broker!
-	data: [Order!]!	
-}
-
 type Order {
 	id: ID!
+	broker: Broker!
 }
 
 input PositionFilter {
@@ -50,13 +46,9 @@ input PositionFilter {
 	broker: ID
 }
 
-type Positions {
-	broker: Broker!	
-	data: [Position!]!
-}
-
 type Position {
 	id: ID!
+	broker: Broker!	
 }
 
 input CandleFilter {
@@ -68,25 +60,20 @@ input CandleFilter {
 	duration: Duration!
 }
 
-type Candles {
-	# the broker from which these candles originated
+type Candle {
+	# the broker from which this candle originated
 	broker: Broker!
 	
-	# the symbol of these candles
+	# the symbol of this candle
 	symbol: String!
 	
-	# the duration of these candles. The amount of time that elapsed between
+	# the duration of this candle. The amount of time that elapsed between
 	# the opening and closing time of this candle. Not to be confused with the
 	# instantaneous point on the time-line at which closing price was observed.
 	# This candle's closing price may have been observed before this duration has
 	# elapsed.
 	duration: Duration!
 	
-	# the candles
-	data: [Candle!]!
-}
-
-type Candle {
 	# the date and time of this candle. The instantaneous point on the
 	# time-line at which this candle was opened. Not to be confused with the
 	# instantaneous point at which opening price was observed. This candle's
@@ -128,18 +115,13 @@ input RateFilter {
 	symbol: String!
 }
 
-type Rates {
-	# the broker from which these rates originated
+type Rate {
+	# the broker from which this rate originated
 	broker: Broker
 	
-	# the symbol of these rates
+	# the symbol of this rate
 	symbol: String!
 	
-	# the rates
-	data: [Rate!]!
-}
-
-type Rate {
 	# the date and time of this rate. The instantaneous point on the
 	# time-line at which this rate was observed.
 	dateTime: DateTime!
