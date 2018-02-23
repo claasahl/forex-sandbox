@@ -1,18 +1,18 @@
 package org.github.claasahl.forex.graphql;
 
-import org.github.claasahl.forex.database.SymbolRepository;
+import org.github.claasahl.forex.database.BrokerRepository;
 import org.github.claasahl.forex.model.*;
 import graphql.schema.DataFetchingEnvironment;
 
 public class CandleResolver {
-private final SymbolRepository symbolRepository;
-	
-	public CandleResolver(SymbolRepository symbolRepository) {
-		this.symbolRepository = symbolRepository;
+	private final BrokerRepository brokerRepository;
+
+	public CandleResolver(BrokerRepository brokerRepository) {
+		this.brokerRepository = brokerRepository;
 	}
-	
-	public Symbol getSymbol(DataFetchingEnvironment environment) {
+
+	public Broker getBroker(DataFetchingEnvironment environment) {
 		Candle candle = environment.getSource();
-		return symbolRepository.getSymbolForId(candle.getSymbolId());
+		return brokerRepository.getBrokerForId(candle.getBrokerId());
 	}
 }

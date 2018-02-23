@@ -1,19 +1,19 @@
 package org.github.claasahl.forex.graphql;
 
-import org.github.claasahl.forex.database.SymbolRepository;
+import org.github.claasahl.forex.database.BrokerRepository;
 import org.github.claasahl.forex.model.*;
 import graphql.schema.DataFetchingEnvironment;
 
 class RateResolver {
-	private final SymbolRepository symbolRepository;
+	private final BrokerRepository brokerRepository;
 	
-	public RateResolver(SymbolRepository symbolRepository) {
-		this.symbolRepository = symbolRepository;
+	public RateResolver(BrokerRepository brokerRepository) {
+		this.brokerRepository = brokerRepository;
 	}
 	
-	public Symbol getSymbol(DataFetchingEnvironment environment) {
+	public Broker getBroker(DataFetchingEnvironment environment) {
 		Rate rate = environment.getSource();
-		return symbolRepository.getSymbolForId(rate.getSymbolId());
+		return brokerRepository.getBrokerForId(rate.getBrokerId());
 	}
 	
 	public double getSpread(DataFetchingEnvironment environment) {
