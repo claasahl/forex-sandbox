@@ -1,19 +1,6 @@
 import React from "react";
 import { graphql } from "react-apollo";
-import gql from "graphql-tag";
-
-const query = gql`
-  {
-    brokers {
-      id
-      name
-      symbols {
-        name
-        duration
-      }
-    }
-  }
-`;
+import BrokersQuery from "../queries/BrokersQuery";
 
 class BrokersView extends React.Component {
   render() {
@@ -48,4 +35,4 @@ class BrokersView extends React.Component {
   }
 }
 
-export default graphql(query)(BrokersView);
+export default graphql(BrokersQuery)(BrokersView);
