@@ -3,7 +3,7 @@ schema {
 }
 
 type Query {
-	brokers: [Broker!]!
+	brokers(filter: BrokerFilter): [Broker!]!
 	orders(filter: OrderFilter): [Order!]!
 	positions(filter: PositionFilter): [Position!]!
 	candles(filter: CandleFilter): [Candle!]!
@@ -13,6 +13,11 @@ type Query {
 scalar DateTime
 
 scalar Duration
+
+input BrokerFilter {
+	# the ID of the broker from which data is requested
+	broker: ID
+}
 
 type Broker {
 	id: ID!
@@ -32,7 +37,7 @@ type Symbol {
 }
 
 input OrderFilter {
-	# the broker's ID from which data is requested
+	# the ID of the broker from which data is requested
 	broker: ID
 }
 
@@ -42,7 +47,7 @@ type Order {
 }
 
 input PositionFilter {
-	# the broker's ID from which data is requested
+	# the ID of the broker from which data is requested
 	broker: ID
 }
 
@@ -52,11 +57,11 @@ type Position {
 }
 
 input CandleFilter {
-	# the broker's ID from which data is requested
+	# the ID of the broker from which data is requested
 	broker: ID!
-	# the symbol's name from which data is requested 
+	# the name of the symbol from which data is requested 
 	symbol: String!
-	# the candle's duration at which data is requested
+	# the duration of the candle at which data is requested
 	duration: Duration!
 }
 
@@ -109,9 +114,9 @@ type Candle {
 }
 
 input RateFilter {
-	# the broker's ID from which data is requested
+	# the ID of the broker from which data is requested
 	broker: ID!
-	# the symbol's name from which data is requested 
+	# the name of the symbol from which data is requested 
 	symbol: String!
 }
 
