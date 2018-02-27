@@ -16,7 +16,7 @@ scalar Duration
 
 input BrokerFilter {
 	# the ID of the broker from which data is requested
-	broker: ID
+	brokerId: ID
 }
 
 type Broker {
@@ -38,7 +38,7 @@ type Symbol {
 
 input OrderFilter {
 	# the ID of the broker from which data is requested
-	broker: ID
+	brokerId: ID
 }
 
 type Order {
@@ -48,7 +48,7 @@ type Order {
 
 input PositionFilter {
 	# the ID of the broker from which data is requested
-	broker: ID
+	brokerId: ID
 }
 
 type Position {
@@ -58,7 +58,7 @@ type Position {
 
 input CandleFilter {
 	# the ID of the broker from which data is requested
-	broker: ID!
+	brokerId: ID!
 	# the name of the symbol from which data is requested 
 	symbol: String!
 	# the duration of the candle at which data is requested
@@ -115,7 +115,7 @@ type Candle {
 
 input RateFilter {
 	# the ID of the broker from which data is requested
-	broker: ID!
+	brokerId: ID!
 	# the name of the symbol from which data is requested 
 	symbol: String!
 }
