@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.github.claasahl.forex.model.Broker;
+import org.github.claasahl.forex.model.*;
 
 public class BrokerRepository {
 	private final Map<Integer, Broker> brokers;
@@ -17,7 +17,12 @@ public class BrokerRepository {
 		this.brokers = brokers.stream().collect(Collectors.toMap(Broker::getId, Function.identity()));
 	}
 
-	public Collection<Broker> getBrokers() {
+	public Collection<Broker> getBrokers(BrokerFilter filter) {
+		if(filter.getBrokerId() != null) {
+			return brokers.values().stream()
+					.filter(broker -> broker.getId() == filter.getBrokerId())
+					.collect(Collectors.toList());
+		}
 		return brokers.values();
 	}
 

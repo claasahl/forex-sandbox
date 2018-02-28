@@ -18,8 +18,9 @@ class QueryResolver {
 	}
 
 	public Collection<Broker> getBrokers(DataFetchingEnvironment environment) {
-		// TODO implement BrokerFilter
-		return brokerRepository.getBrokers();
+		Map<String, Object> filterMap = environment.getArgument("filter");
+		BrokerFilter filter = BrokerFilter.fromMap(filterMap);
+		return brokerRepository.getBrokers(filter);
 	}
 
 	public Collection<Candle> getCandles(DataFetchingEnvironment environment) {
