@@ -6,6 +6,7 @@ export default gql`
       id
       name
       symbols {
+        id
         name
         duration
       }

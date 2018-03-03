@@ -4,11 +4,10 @@ import BrokersQuery from "../queries/BrokersQuery";
 
 class BrokerDetailView extends React.Component {
   render() {
-    const { data } = this.props;
-    if (data.loading) {
+    const { data: { loading, brokers } } = this.props;
+    if (loading) {
       return <div>Loading ...</div>;
     }
-    const { brokers } = data;
     const broker = brokers[0] || {};
     return (
       <div>
