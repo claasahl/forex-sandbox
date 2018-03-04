@@ -22,6 +22,12 @@ class QueryResolver {
 		BrokerFilter filter = BrokerFilter.fromMap(filterMap);
 		return brokerRepository.getBrokers(filter);
 	}
+	
+	public Broker getBroker(DataFetchingEnvironment environment) {
+		String id = environment.getArgument("id");
+		int brokerId = Integer.valueOf(id);
+		return brokerRepository.getBrokerForId(brokerId);
+	}
 
 	public Collection<Candle> getCandles(DataFetchingEnvironment environment) {
 		// TODO implement CandleFilter

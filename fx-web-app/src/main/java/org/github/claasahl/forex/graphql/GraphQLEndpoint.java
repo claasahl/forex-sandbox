@@ -48,6 +48,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 		QueryResolver queryResolver = new QueryResolver(BROKER_REPOSITORY, CANDLE_REPOSITORY, RATE_REPOSITORY);
 		return builder
 				.dataFetcher("brokers", queryResolver::getBrokers)
+				.dataFetcher("broker", queryResolver::getBroker)
 				.dataFetcher("candles", queryResolver::getCandles)
 				.dataFetcher("rates", queryResolver::getRates);
 	}

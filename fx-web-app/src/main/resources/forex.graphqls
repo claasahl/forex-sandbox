@@ -4,8 +4,11 @@ schema {
 
 type Query {
 	brokers(filter: BrokerFilter): [Broker!]!
+	broker(id: ID!): Broker!
 	orders(filter: OrderFilter): [Order!]!
+	order(id: ID!): Order!
 	positions(filter: PositionFilter): [Position!]!
+	position(id: ID!): Position!
 	candles(filter: CandleFilter): [Candle!]!
 	rates(filter: RateFilter): [Rate!]!
 }
