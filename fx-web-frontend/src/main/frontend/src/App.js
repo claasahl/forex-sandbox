@@ -13,7 +13,7 @@ const link = new HttpLink({
 const cache = new InMemoryCache({
   cacheResolvers: {
     Query: {
-      brokers: (_, args) =>
+      broker: (_, args) =>
         toIdValue(
           cache.config.dataIdFromObject({ __typename: "Broker", id: args.id })
         ),

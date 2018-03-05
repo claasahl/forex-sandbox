@@ -1,14 +1,13 @@
 import React from "react";
 import { graphql } from "react-apollo";
-import BrokersQuery from "../queries/BrokersQuery";
+import BrokerQuery from "../queries/BrokerQuery";
 
 class BrokerDetailView extends React.Component {
   render() {
-    const { data: { loading, brokers } } = this.props;
+    const { data: { loading, broker } } = this.props;
     if (loading) {
       return <div>Loading ...</div>;
     }
-    const broker = brokers[0] || {};
     return (
       <div>
         <h1>{broker.name}</h1>
@@ -35,4 +34,4 @@ const queryOptions = {
   }),
 };
 
-export default graphql(BrokersQuery, queryOptions)(BrokerDetailView);
+export default graphql(BrokerQuery, queryOptions)(BrokerDetailView);
