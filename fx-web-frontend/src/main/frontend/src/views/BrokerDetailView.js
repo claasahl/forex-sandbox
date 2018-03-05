@@ -4,13 +4,14 @@ import BrokerQuery from "../queries/BrokerQuery";
 
 class BrokerDetailView extends React.Component {
   render() {
-    const { data: { loading, broker } } = this.props;
+    const { data: { loading, refetch, broker } } = this.props;
     if (loading) {
       return <div>Loading ...</div>;
     }
     return (
       <div>
         <h1>{broker.name}</h1>
+        <button onClick={() => refetch()}>Reload</button>
         <ul>
           {broker.symbols.map(symbol => {
             return (
