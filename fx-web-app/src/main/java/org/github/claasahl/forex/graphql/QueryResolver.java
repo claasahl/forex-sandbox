@@ -30,12 +30,14 @@ class QueryResolver {
 	}
 
 	public Collection<Candle> getCandles(DataFetchingEnvironment environment) {
-		// TODO implement CandleFilter
-		return candleRepository.getCandles();
+		Map<String, Object> filterMap = environment.getArgument("filter");
+		CandleFilter filter = CandleFilter.fromMap(filterMap);
+		return candleRepository.getCandles(filter);
 	}
 
 	public Collection<Rate> getRates(DataFetchingEnvironment environment) {
-		// TODO implement RateFilter
-		return rateRepository.getRates();
+		Map<String, Object> filterMap = environment.getArgument("filter");
+		RateFilter filter = RateFilter.fromMap(filterMap);
+		return rateRepository.getRates(filter);
 	}
 }

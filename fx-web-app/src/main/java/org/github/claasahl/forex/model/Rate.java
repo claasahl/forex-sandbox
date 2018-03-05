@@ -11,8 +11,6 @@ import java.time.OffsetDateTime;
  *
  */
 public interface Rate extends Comparable<Rate> {
-	int getBrokerId();
-	
 	/**
 	 * Returns the symbol of this rate. It represents the name of the product or
 	 * financial instrument for which the prices were observed.

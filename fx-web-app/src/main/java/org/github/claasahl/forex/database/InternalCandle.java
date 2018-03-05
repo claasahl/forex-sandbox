@@ -13,7 +13,6 @@ import org.github.claasahl.forex.model.Candle;
  *
  */
 class InternalCandle implements Candle {
-	private final int brokerId;
 	private final String symbol;
 	private final OffsetDateTime dateTime;
 	private final Duration duration;
@@ -30,7 +29,6 @@ class InternalCandle implements Candle {
 	 *            the builder with which the candle is constructed
 	 */
 	InternalCandle(Builder builder) {
-		brokerId = builder.brokerId;
 		symbol = builder.symbol;
 		dateTime = builder.dateTime;
 		duration = builder.duration;
@@ -41,11 +39,6 @@ class InternalCandle implements Candle {
 		volume = builder.volume;
 	}
 	
-	@Override
-	public int getBrokerId() {
-		return brokerId;
-	}
-
 	@Override
 	public String getSymbol() {
 		return symbol;
@@ -88,7 +81,7 @@ class InternalCandle implements Candle {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(brokerId, symbol, dateTime, duration, open, high, low, close, volume);
+		return Objects.hash(symbol, dateTime, duration, open, high, low, close, volume);
 	}
 
 	@Override
@@ -98,8 +91,7 @@ class InternalCandle implements Candle {
 		if (!(obj instanceof Candle))
 			return false;
 		Candle other = (Candle) obj;
-		return brokerId == other.getBrokerId()
-				&& Objects.equals(symbol, other.getSymbol())
+		return Objects.equals(symbol, other.getSymbol())
 				&& Objects.equals(dateTime, other.getDateTime())
 				&& Objects.equals(duration, other.getDuration())
 				&& open == other.getOpen()
@@ -111,7 +103,7 @@ class InternalCandle implements Candle {
 
 	@Override
 	public String toString() {
-		return "Candle [broker="+ brokerId +", symbol=" + symbol + ", dateTime=" + dateTime + ", duration=" + duration + ", open=" + open
+		return "Candle [symbol=" + symbol + ", dateTime=" + dateTime + ", duration=" + duration + ", open=" + open
 				+ ", high=" + high + ", low=" + low + ", close=" + close + ", volume=" + volume + "]";
 	}
 	
@@ -125,7 +117,6 @@ class InternalCandle implements Candle {
 	 *
 	 */
 	public static final class Builder implements Candle {
-		private int brokerId;
 		private String symbol;
 		private OffsetDateTime dateTime;
 		private Duration duration;
@@ -138,7 +129,6 @@ class InternalCandle implements Candle {
 		/**
 		 * Creates a {@link Builder} that has been initialized with default values.
 		 * <ul>
-		 * <li>brokerId = 0</li>
 		 * <li>symbol = null</li>
 		 * <li>dateTime = {@link OffsetDateTime#now()}</li>
 		 * <li>duration = null</li>
@@ -153,24 +143,6 @@ class InternalCandle implements Candle {
 			dateTime = OffsetDateTime.now();
 		}
 		
-		@Override
-		public int getBrokerId() {
-			return brokerId;
-		}
-		
-		/**
-		 * Sets the broker (ID) of the candle.
-		 * 
-		 * @param brokerId
-		 *            the broker (ID)
-		 * @return this builder
-		 * @see Candle#getBrokerId()
-		 */
-		public Builder setBrokerId(int brokerId) {
-			this.brokerId = brokerId;
-			return this;
-		}
-
 		@Override
 		public String getSymbol() {
 			return symbol;

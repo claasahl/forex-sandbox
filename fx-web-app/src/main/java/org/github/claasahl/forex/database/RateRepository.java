@@ -12,7 +12,7 @@ public class RateRepository {
 		rates.add(new InternalRate.Builder().setSymbol("GBPAUD").build());
 	}
 
-	public List<Rate> getRates() {
+	public List<Rate> getRates(RateFilter filter) {
 		return rates;
 	}
 }

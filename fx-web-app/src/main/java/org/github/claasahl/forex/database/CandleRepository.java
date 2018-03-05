@@ -2,7 +2,7 @@ package org.github.claasahl.forex.database;
 
 import java.time.Duration;
 import java.util.*;
-import org.github.claasahl.forex.model.Candle;
+import org.github.claasahl.forex.model.*;
 
 public class CandleRepository {
 	private final List<Candle> candles;
@@ -13,7 +13,7 @@ public class CandleRepository {
 		candles.add(new InternalCandle.Builder().setSymbol("EURUSD").setDuration(Duration.ofMinutes(5)).build());
 	}
 
-	public List<Candle> getCandles() {
+	public List<Candle> getCandles(CandleFilter filter) {
 		return candles;
 	}
 }
