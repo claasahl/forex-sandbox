@@ -3,14 +3,14 @@ schema {
 }
 
 type Query {
-	brokers(filter: BrokerFilter): [Broker!]!
+	brokers(filter: BrokerFilter!): [Broker!]!
 	broker(id: ID!): Broker!
-	orders(filter: OrderFilter): [Order!]!
+	orders(filter: OrderFilter!): [Order!]!
 	order(id: ID!): Order!
-	positions(filter: PositionFilter): [Position!]!
+	positions(filter: PositionFilter!): [Position!]!
 	position(id: ID!): Position!
-	candles(filter: CandleFilter): [Candle!]!
-	rates(filter: RateFilter): [Rate!]!
+	candles(filter: CandleFilter!): [Candle!]!
+	rates(filter: RateFilter!): [Rate!]!
 }
 
 scalar DateTime
