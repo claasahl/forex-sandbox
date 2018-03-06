@@ -23,7 +23,8 @@ public class Scalars {
 				@Override
 				public OffsetDateTime parseLiteral(Object input) {
 					if (input instanceof StringValue) {
-						return OffsetDateTime.parse(input.toString());
+						String value = ((StringValue) input).getValue();
+						return OffsetDateTime.parse(value);
 					}
 					return null;
 				}
@@ -44,7 +45,8 @@ public class Scalars {
 				@Override
 				public Duration parseLiteral(Object input) {
 					if (input instanceof StringValue) {
-						return Duration.parse(input.toString());
+						String value = ((StringValue) input).getValue();
+						return Duration.parse(value);
 					}
 					return null;
 				}
