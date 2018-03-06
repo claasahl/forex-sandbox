@@ -1,19 +1,19 @@
 package org.github.claasahl.forex.graphql;
 
 import java.util.*;
+import org.github.claasahl.forex.broker.DummyBroker;
 import org.github.claasahl.forex.database.*;
 import org.github.claasahl.forex.model.*;
 import graphql.schema.DataFetchingEnvironment;
 
 class QueryResolver {
+	private final DummyBroker dummyBroker = new DummyBroker();
 	private final BrokerRepository brokerRepository;
-	private final CandleRepository candleRepository;
 	private final RateRepository rateRepository;
 
 	public QueryResolver(BrokerRepository brokerRepository, CandleRepository candleRepository,
 			RateRepository rateRepository) {
 		this.brokerRepository = brokerRepository;
-		this.candleRepository = candleRepository;
 		this.rateRepository = rateRepository;
 	}
 
@@ -29,10 +29,10 @@ class QueryResolver {
 		return brokerRepository.getBrokerForId(brokerId);
 	}
 
-	public Collection<Candle> getCandles(DataFetchingEnvironment environment) {
+	public Collection<GqlCandle> getCandles(DataFetchingEnvironment environment) {
 		Map<String, Object> filterMap = environment.getArgument("filter");
-		CandleFilter filter = CandleFilter.fromMap(filterMap);
-		return candleRepository.getCandles(filter);
+		GqlCandleFilter filter = GqlCandleFilter.fromMap(filterMap);
+		return dummyBroker.candles(filter.getFilter()).map(candle -> new GqlCandle(filter, candle)).toList().blockingGet();
 	}
 
 	public Collection<Rate> getRates(DataFetchingEnvironment environment) {
