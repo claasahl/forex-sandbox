@@ -3,27 +3,26 @@ package org.github.claasahl.forex.graphql;
 import java.util.*;
 import org.github.claasahl.forex.broker.DummyBroker;
 import org.github.claasahl.forex.database.*;
-import org.github.claasahl.forex.model.*;
 import graphql.schema.DataFetchingEnvironment;
 
 class QueryResolver {
 	private final DummyBroker dummyBroker = new DummyBroker();
-	private final BrokerRepository brokerRepository;
+	private final BrokerInstanceRepository brokerInstanceRepository;
 
-	public QueryResolver(BrokerRepository brokerRepository) {
-		this.brokerRepository = brokerRepository;
+	public QueryResolver(BrokerInstanceRepository brokerInstanceRepository) {
+		this.brokerInstanceRepository = brokerInstanceRepository;
 	}
 
-	public Collection<Broker> getBrokers(DataFetchingEnvironment environment) {
+	public Collection<GqlBroker> getBrokers(DataFetchingEnvironment environment) {
 		Map<String, Object> filterMap = environment.getArgument("filter");
-		BrokerFilter filter = BrokerFilter.fromMap(filterMap);
-		return brokerRepository.getBrokers(filter);
+		GqlBrokerFilter filter = GqlBrokerFilter.fromMap(filterMap);
+		return brokerInstanceRepository.getBrokerInstances(filter.getFilter()).map(GqlBroker::new).toList()
+				.blockingGet();
 	}
 
-	public Broker getBroker(DataFetchingEnvironment environment) {
+	public GqlBroker getBroker(DataFetchingEnvironment environment) {
 		String id = environment.getArgument("id");
-		int brokerId = Integer.valueOf(id);
-		return brokerRepository.getBrokerForId(brokerId);
+		return brokerInstanceRepository.getBrokerInstanceForId(id).map(GqlBroker::new).blockingGet();
 	}
 
 	public Collection<GqlCandle> getCandles(DataFetchingEnvironment environment) {

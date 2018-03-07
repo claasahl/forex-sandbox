@@ -9,6 +9,7 @@ import graphql.servlet.SimpleGraphQLServlet;
 
 public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	private static final long serialVersionUID = -407893796327589811L;
+	private static final BrokerInstanceRepository BROKER_INSTANCE_REPOSITORY = new BrokerInstanceRepository();
 	private static final BrokerRepository BROKER_REPOSITORY = new BrokerRepository();
 	private static final SymbolRepository SYMBOL_REPOSITORY = new SymbolRepository();
 
@@ -43,7 +44,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	}
 
 	private static Builder wiringForQuery(Builder builder) {
-		QueryResolver queryResolver = new QueryResolver(BROKER_REPOSITORY);
+		QueryResolver queryResolver = new QueryResolver(BROKER_INSTANCE_REPOSITORY);
 		return builder
 				.dataFetcher("brokers", queryResolver::getBrokers)
 				.dataFetcher("broker", queryResolver::getBroker)
