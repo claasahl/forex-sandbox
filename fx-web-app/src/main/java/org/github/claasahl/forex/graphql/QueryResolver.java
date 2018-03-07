@@ -9,11 +9,9 @@ import graphql.schema.DataFetchingEnvironment;
 class QueryResolver {
 	private final DummyBroker dummyBroker = new DummyBroker();
 	private final BrokerRepository brokerRepository;
-	private final RateRepository rateRepository;
 
 	public QueryResolver(BrokerRepository brokerRepository, RateRepository rateRepository) {
 		this.brokerRepository = brokerRepository;
-		this.rateRepository = rateRepository;
 	}
 
 	public Collection<Broker> getBrokers(DataFetchingEnvironment environment) {
@@ -21,7 +19,7 @@ class QueryResolver {
 		BrokerFilter filter = BrokerFilter.fromMap(filterMap);
 		return brokerRepository.getBrokers(filter);
 	}
-	
+
 	public Broker getBroker(DataFetchingEnvironment environment) {
 		String id = environment.getArgument("id");
 		int brokerId = Integer.valueOf(id);
@@ -31,12 +29,13 @@ class QueryResolver {
 	public Collection<GqlCandle> getCandles(DataFetchingEnvironment environment) {
 		Map<String, Object> filterMap = environment.getArgument("filter");
 		GqlCandleFilter filter = GqlCandleFilter.fromMap(filterMap);
-		return dummyBroker.candles(filter.getFilter()).map(candle -> new GqlCandle(filter, candle)).toList().blockingGet();
+		return dummyBroker.candles(filter.getFilter()).map(candle -> new GqlCandle(filter, candle)).toList()
+				.blockingGet();
 	}
 
-	public Collection<Rate> getRates(DataFetchingEnvironment environment) {
+	public Collection<GqlRate> getRates(DataFetchingEnvironment environment) {
 		Map<String, Object> filterMap = environment.getArgument("filter");
-		RateFilter filter = RateFilter.fromMap(filterMap);
-		return rateRepository.getRates(filter);
+		GqlRateFilter filter = GqlRateFilter.fromMap(filterMap);
+		return dummyBroker.rates(filter.getFilter()).map(rate -> new GqlRate(filter, rate)).toList().blockingGet();
 	}
 }

@@ -69,8 +69,6 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 
 	private static Builder wiringForRate(Builder builder) {
 		RateResolver rateResolver = new RateResolver(BROKER_REPOSITORY);
-		return builder
-				.dataFetcher("broker", rateResolver::getBroker)
-				.dataFetcher("spread", rateResolver::getSpread);
+		return builder.dataFetcher("broker", rateResolver::getBroker);
 	}
 }

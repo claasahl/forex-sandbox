@@ -18,4 +18,14 @@ public class DummyBroker implements Broker {
 		return Observable.just(candle);
 	}
 
+	@Override
+	public Observable<Rate> rates(RateFilter filter) {
+		Rate rate = new Rate.Builder()
+				.setDateTime(OffsetDateTime.now())
+				.setBid(0.5)
+				.setAsk(0.6)
+				.build();
+		return Observable.just(rate);
+	}
+
 }
