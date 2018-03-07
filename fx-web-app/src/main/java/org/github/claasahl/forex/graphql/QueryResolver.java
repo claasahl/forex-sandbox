@@ -10,7 +10,7 @@ class QueryResolver {
 	private final DummyBroker dummyBroker = new DummyBroker();
 	private final BrokerRepository brokerRepository;
 
-	public QueryResolver(BrokerRepository brokerRepository, RateRepository rateRepository) {
+	public QueryResolver(BrokerRepository brokerRepository) {
 		this.brokerRepository = brokerRepository;
 	}
 
