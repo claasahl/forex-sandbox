@@ -1,8 +1,7 @@
 package org.github.claasahl.forex.graphql;
 
-import java.util.Map;
 import org.github.claasahl.forex.database.BrokerRepository;
-import org.github.claasahl.forex.model.*;
+import org.github.claasahl.forex.model.Broker;
 import graphql.schema.DataFetchingEnvironment;
 
 public class CandleResolver {
@@ -13,8 +12,6 @@ public class CandleResolver {
 	}
 
 	public Broker getBroker(DataFetchingEnvironment environment) {
-		Map<String, Object> filterMap = environment.getArgument("filter");
-		CandleFilter filter = CandleFilter.fromMap(filterMap);
-		return brokerRepository.getBrokerForId(filter.getBrokerId());
+		return brokerRepository.getBrokerForId(0);
 	}
 }

@@ -11,8 +11,7 @@ class QueryResolver {
 	private final BrokerRepository brokerRepository;
 	private final RateRepository rateRepository;
 
-	public QueryResolver(BrokerRepository brokerRepository, CandleRepository candleRepository,
-			RateRepository rateRepository) {
+	public QueryResolver(BrokerRepository brokerRepository, RateRepository rateRepository) {
 		this.brokerRepository = brokerRepository;
 		this.rateRepository = rateRepository;
 	}
