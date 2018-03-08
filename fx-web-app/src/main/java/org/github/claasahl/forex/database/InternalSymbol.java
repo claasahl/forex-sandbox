@@ -1,37 +1,32 @@
 package org.github.claasahl.forex.database;
 
 import java.time.Duration;
-import org.github.claasahl.forex.model.*;
 
-class InternalSymbol implements Symbol {
-	private final int id;
-	private final int brokerId;
+public class InternalSymbol {
+	private final String id;
+	private final String brokerId;
 	private final String name;
 	private final Duration duration;
 
 	public InternalSymbol(int id, int brokerId, String name, Duration duration) {
-		this.id = id;
-		this.brokerId = brokerId;
+		this.id = id + "";
+		this.brokerId = brokerId + "";
 		this.name = name;
 		this.duration = duration;
 	}
 
-	@Override
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	@Override
-	public int getBrokerId() {
+	public String getBrokerId() {
 		return brokerId;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
 
-	@Override
 	public Duration getDuration() {
 		return duration;
 	}

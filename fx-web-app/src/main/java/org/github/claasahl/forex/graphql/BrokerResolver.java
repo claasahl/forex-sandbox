@@ -2,7 +2,6 @@ package org.github.claasahl.forex.graphql;
 
 import java.util.Collection;
 import org.github.claasahl.forex.database.SymbolRepository;
-import org.github.claasahl.forex.model.*;
 import graphql.schema.DataFetchingEnvironment;
 
 class BrokerResolver {
@@ -12,8 +11,8 @@ class BrokerResolver {
 		this.symbolRepository = symbolRepository;
 	}
 
-	Collection<Symbol> getSymbols(DataFetchingEnvironment environment) {
-		Broker broker = environment.getSource();
-		return symbolRepository.getSymbolsForBroker(broker);
+	Collection<GqlSymbol> getSymbols(DataFetchingEnvironment environment) {
+		GqlBroker broker = environment.getSource();
+		return symbolRepository.getSymbolsForBrokerId(broker.getId()).map(GqlSymbol::new).toList().blockingGet();
 	}
 }

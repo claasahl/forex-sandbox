@@ -5,27 +5,27 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.github.claasahl.forex.model.*;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public class SymbolRepository {
-	private final Map<Integer, Symbol> symbols;
+	private final Map<String, InternalSymbol> symbols;
 
 	public SymbolRepository() {
 		AtomicInteger ids = new AtomicInteger();
-		List<Symbol> symbols = new ArrayList<>();
-		symbols.add(new InternalSymbol(ids.getAndIncrement(), 0, "EURUSD", Duration.ofMinutes(1)));
+		List<InternalSymbol> symbols = new ArrayList<>();
+		symbols.add(new InternalSymbol(ids.getAndIncrement(), 0, "AUDGBP", Duration.ofMinutes(1)));
 		symbols.add(new InternalSymbol(ids.getAndIncrement(), 1, "EURUSD", Duration.ofHours(1)));
 		symbols.add(new InternalSymbol(ids.getAndIncrement(), 1, "EURUSD", null));
-		this.symbols = symbols.stream().collect(Collectors.toMap(Symbol::getId, Function.identity()));
+		this.symbols = symbols.stream().collect(Collectors.toMap(InternalSymbol::getId, Function.identity()));
 	}
 
-	public Collection<Symbol> getSymbolsForBroker(Broker broker) {
-		return symbols.values().stream()
-				.filter(symbol -> symbol.getBrokerId() == broker.getId())
-				.collect(Collectors.toList());
+	public Observable<InternalSymbol> getSymbolsForBrokerId(String brokerId) {
+		return Observable.fromIterable(symbols.values())
+				.filter(symbol -> symbol.getBrokerId().equals(brokerId));
 	}
 
-	public Symbol getSymbolForId(int symbolId) {
-		return symbols.get(symbolId);
+	public Single<InternalSymbol> getSymbolForId(String symbolId) {
+		return Single.just(symbols.get(symbolId));
 	}
 }
