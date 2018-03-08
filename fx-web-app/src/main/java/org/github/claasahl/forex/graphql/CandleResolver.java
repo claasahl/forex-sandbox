@@ -1,17 +1,17 @@
 package org.github.claasahl.forex.graphql;
 
-import org.github.claasahl.forex.database.BrokerRepository;
-import org.github.claasahl.forex.model.Broker;
+import org.github.claasahl.forex.database.BrokerInstanceRepository;
 import graphql.schema.DataFetchingEnvironment;
 
 public class CandleResolver {
-	private final BrokerRepository brokerRepository;
+	private final BrokerInstanceRepository brokerInstanceRepository;
 
-	public CandleResolver(BrokerRepository brokerRepository) {
-		this.brokerRepository = brokerRepository;
+	public CandleResolver(BrokerInstanceRepository brokerInstanceRepository) {
+		this.brokerInstanceRepository = brokerInstanceRepository;
 	}
 
-	public Broker getBroker(DataFetchingEnvironment environment) {
-		return brokerRepository.getBrokerForId(0);
+	public GqlBroker getBroker(DataFetchingEnvironment environment) {
+		GqlCandle candle = environment.getSource();
+		return brokerInstanceRepository.getBrokerInstanceForId(candle.getBrokerId()).map(GqlBroker::new).blockingGet();
 	}
 }

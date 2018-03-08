@@ -63,12 +63,12 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	}
 
 	private static Builder wiringForCandle(Builder builder) {
-		CandleResolver candleResolver = new CandleResolver(BROKER_REPOSITORY);
+		CandleResolver candleResolver = new CandleResolver(BROKER_INSTANCE_REPOSITORY);
 		return builder.dataFetcher("broker", candleResolver::getBroker);
 	}
 
 	private static Builder wiringForRate(Builder builder) {
-		RateResolver rateResolver = new RateResolver(BROKER_REPOSITORY);
+		RateResolver rateResolver = new RateResolver(BROKER_INSTANCE_REPOSITORY);
 		return builder.dataFetcher("broker", rateResolver::getBroker);
 	}
 }
