@@ -10,7 +10,6 @@ import graphql.servlet.SimpleGraphQLServlet;
 public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	private static final long serialVersionUID = -407893796327589811L;
 	private static final BrokerInstanceRepository BROKER_INSTANCE_REPOSITORY = new BrokerInstanceRepository();
-	private static final BrokerRepository BROKER_REPOSITORY = new BrokerRepository();
 	private static final SymbolRepository SYMBOL_REPOSITORY = new SymbolRepository();
 
 	public GraphQLEndpoint() {
@@ -37,7 +36,6 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 				.scalar(Scalars.duration)
 				.type("Query", GraphQLEndpoint::wiringForQuery)
 				.type("Broker", GraphQLEndpoint::wiringForBroker)
-				.type("Symbol", GraphQLEndpoint::wiringForSymbol)
 				.type("Candle", GraphQLEndpoint::wiringForCandle)
 				.type("Rate", GraphQLEndpoint::wiringForRate)
 				.build();
@@ -55,11 +53,6 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	private static Builder wiringForBroker(Builder builder) {
 		BrokerResolver brokerResolver = new BrokerResolver(SYMBOL_REPOSITORY);
 		return builder.dataFetcher("symbols", brokerResolver::getSymbols);
-	}
-
-	private static Builder wiringForSymbol(Builder builder) {
-		SymbolResolver symbolResolver = new SymbolResolver(BROKER_REPOSITORY);
-		return builder.dataFetcher("broker", symbolResolver::getBroker);
 	}
 
 	private static Builder wiringForCandle(Builder builder) {
