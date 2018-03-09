@@ -4,13 +4,13 @@ import java.time.Duration;
 import org.github.claasahl.forex.database.*;
 
 class GqlSymbol {
-	private final InternalSymbol symbol;
+	private final Symbol symbol;
 
-	public GqlSymbol(InternalSymbol symbol) {
+	public GqlSymbol(Symbol symbol) {
 		this.symbol = symbol;
 	}
 
-	public InternalSymbol getSymbol() {
+	public Symbol getSymbol() {
 		return symbol;
 	}
 

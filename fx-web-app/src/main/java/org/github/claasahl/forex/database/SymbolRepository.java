@@ -9,23 +9,23 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public class SymbolRepository {
-	private final Map<String, InternalSymbol> symbols;
+	private final Map<String, Symbol> symbols;
 
 	public SymbolRepository() {
 		AtomicInteger ids = new AtomicInteger();
-		List<InternalSymbol> symbols = new ArrayList<>();
-		symbols.add(new InternalSymbol(ids.getAndIncrement(), 0, "AUDGBP", Duration.ofMinutes(1)));
-		symbols.add(new InternalSymbol(ids.getAndIncrement(), 1, "EURUSD", Duration.ofHours(1)));
-		symbols.add(new InternalSymbol(ids.getAndIncrement(), 1, "EURUSD", null));
-		this.symbols = symbols.stream().collect(Collectors.toMap(InternalSymbol::getId, Function.identity()));
+		List<Symbol> symbols = new ArrayList<>();
+		symbols.add(new Symbol(ids.getAndIncrement(), 0, "AUDGBP", Duration.ofMinutes(1)));
+		symbols.add(new Symbol(ids.getAndIncrement(), 1, "EURUSD", Duration.ofHours(1)));
+		symbols.add(new Symbol(ids.getAndIncrement(), 1, "EURUSD", null));
+		this.symbols = symbols.stream().collect(Collectors.toMap(Symbol::getId, Function.identity()));
 	}
 
-	public Observable<InternalSymbol> getSymbolsForBrokerId(String brokerId) {
+	public Observable<Symbol> getSymbolsForBrokerId(String brokerId) {
 		return Observable.fromIterable(symbols.values())
 				.filter(symbol -> symbol.getBrokerId().equals(brokerId));
 	}
 
-	public Single<InternalSymbol> getSymbolForId(String symbolId) {
+	public Single<Symbol> getSymbolForId(String symbolId) {
 		return Single.just(symbols.get(symbolId));
 	}
 }

@@ -2,13 +2,13 @@ package org.github.claasahl.forex.database;
 
 import java.time.Duration;
 
-public class InternalSymbol {
+public class Symbol {
 	private final String id;
 	private final String brokerId;
 	private final String name;
 	private final Duration duration;
 
-	public InternalSymbol(int id, int brokerId, String name, Duration duration) {
+	public Symbol(int id, int brokerId, String name, Duration duration) {
 		this.id = id + "";
 		this.brokerId = brokerId + "";
 		this.name = name;
