@@ -7,11 +7,11 @@ import graphql.schema.DataFetchingEnvironment;
 class BrokerResolver {
 	private final SymbolRepository symbolRepository;
 
-	public BrokerResolver(SymbolRepository symbolRepository) {
+	protected BrokerResolver(SymbolRepository symbolRepository) {
 		this.symbolRepository = symbolRepository;
 	}
 
-	Collection<GqlSymbol> getSymbols(DataFetchingEnvironment environment) {
+	protected Collection<GqlSymbol> getSymbols(DataFetchingEnvironment environment) {
 		GqlBroker broker = environment.getSource();
 		return symbolRepository.getSymbolsForBrokerId(broker.getId()).map(GqlSymbol::new).toList().blockingGet();
 	}
