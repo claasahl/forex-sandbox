@@ -1,0 +1,23 @@
+package org.github.claasahl.forex.broker;
+
+import java.util.Properties;
+import org.github.claasahl.forex.broker.spi.*;
+
+public class DummyBrokerProvider implements BrokerProvider {
+
+	@Override
+	public String getName() {
+		return "dummy provider";
+	}
+
+	@Override
+	public boolean isSupported(Properties configuration) {
+		return true;
+	}
+
+	@Override
+	public Broker instantiate(Properties configuration) {
+		return new DummyBroker();
+	}
+
+}

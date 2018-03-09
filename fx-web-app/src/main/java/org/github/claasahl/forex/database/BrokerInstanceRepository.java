@@ -14,9 +14,9 @@ public class BrokerInstanceRepository {
 		AtomicInteger ids = new AtomicInteger();
 		List<BrokerInstance> brokers = new ArrayList<>();
 		brokers.add(new BrokerInstance.Builder().setId(ids.getAndIncrement() + "").setName("Custom Spotware")
-				.setProviderName("unknown").build());
+				.setProviderName("dummy provider").build());
 		brokers.add(new BrokerInstance.Builder().setId(ids.getAndIncrement() + "").setName("Custom Random Data")
-				.setProviderName("also unknown").build());
+				.setProviderName("dummy provider").build());
 		this.brokerInstances = brokers.stream().collect(Collectors.toMap(BrokerInstance::getId, Function.identity()));
 	}
 
