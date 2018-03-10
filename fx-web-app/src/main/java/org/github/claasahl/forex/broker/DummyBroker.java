@@ -1,7 +1,6 @@
 package org.github.claasahl.forex.broker;
 
 import java.time.OffsetDateTime;
-import org.github.claasahl.forex.broker.spi.Broker;
 import io.reactivex.Observable;
 
 public class DummyBroker implements Broker {

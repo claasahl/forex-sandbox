@@ -1,4 +1,4 @@
-package org.github.claasahl.forex.broker.spi;
+package org.github.claasahl.forex.broker;
 
 import org.github.claasahl.forex.broker.*;
 import io.reactivex.Observable;
