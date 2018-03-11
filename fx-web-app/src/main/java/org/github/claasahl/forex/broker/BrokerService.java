@@ -1,9 +1,9 @@
 package org.github.claasahl.forex.broker;
 
 import java.util.*;
-import org.github.claasahl.forex.broker.spi.*;
-import io.reactivex.*;
+import org.github.claasahl.forex.broker.spi.BrokerProvider;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public class BrokerService {
 	private final ServiceLoader<BrokerProvider> serviceLoader = ServiceLoader.load(BrokerProvider.class);

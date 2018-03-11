@@ -1,7 +1,7 @@
 package org.github.claasahl.forex.graphql;
 
 import java.time.Duration;
-import org.github.claasahl.forex.database.*;
+import org.github.claasahl.forex.database.Symbol;
 
 class GqlSymbol {
 	private final Symbol symbol;

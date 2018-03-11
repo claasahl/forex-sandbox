@@ -1,6 +1,6 @@
 package org.github.claasahl.forex.broker;
 
-import java.time.*;
+import java.time.Duration;
 
 public class CandleFilter {
 	private final String symbol;
