@@ -6,11 +6,11 @@ import org.github.claasahl.forex.database.Symbol;
 class GqlSymbol {
 	private final Symbol symbol;
 
-	public GqlSymbol(Symbol symbol) {
+	protected GqlSymbol(Symbol symbol) {
 		this.symbol = symbol;
 	}
 
-	public Symbol getSymbol() {
+	protected Symbol getSymbol() {
 		return symbol;
 	}
 

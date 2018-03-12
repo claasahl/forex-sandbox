@@ -7,20 +7,20 @@ class GqlRateFilter {
 	private final String brokerId;
 	private final RateFilter filter;
 
-	public GqlRateFilter(String brokerId, RateFilter filter) {
+	protected GqlRateFilter(String brokerId, RateFilter filter) {
 		this.brokerId = brokerId;
 		this.filter = filter;
 	}
 
-	public String getBrokerId() {
+	protected String getBrokerId() {
 		return brokerId;
 	}
 
-	public RateFilter getFilter() {
+	protected RateFilter getFilter() {
 		return filter;
 	}
 
-	public static GqlRateFilter fromMap(Map<String, Object> map) {
+	protected static GqlRateFilter fromMap(Map<String, Object> map) {
 		if (map == null)
 			return null;
 		String brokerId = (String) map.get("brokerId");

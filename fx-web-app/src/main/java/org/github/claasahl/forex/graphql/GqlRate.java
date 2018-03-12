@@ -7,16 +7,16 @@ class GqlRate {
 	private final GqlRateFilter filter;
 	private final Rate rate;
 
-	public GqlRate(GqlRateFilter filter, Rate rate) {
+	protected GqlRate(GqlRateFilter filter, Rate rate) {
 		this.filter = filter;
 		this.rate = rate;
 	}
 
-	public GqlRateFilter getFilter() {
+	protected GqlRateFilter getFilter() {
 		return filter;
 	}
 
-	public Rate getRate() {
+	protected Rate getRate() {
 		return rate;
 	}
 

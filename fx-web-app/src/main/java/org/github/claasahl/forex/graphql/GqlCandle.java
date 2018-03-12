@@ -7,16 +7,16 @@ class GqlCandle {
 	private final GqlCandleFilter filter;
 	private final Candle candle;
 
-	public GqlCandle(GqlCandleFilter filter, Candle candle) {
+	protected GqlCandle(GqlCandleFilter filter, Candle candle) {
 		this.filter = filter;
 		this.candle = candle;
 	}
 
-	public GqlCandleFilter getFilter() {
+	protected GqlCandleFilter getFilter() {
 		return filter;
 	}
 
-	public Candle getCandle() {
+	protected Candle getCandle() {
 		return candle;
 	}
 

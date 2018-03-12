@@ -8,20 +8,20 @@ class GqlCandleFilter {
 	private final String brokerId;
 	private final CandleFilter filter;
 
-	public GqlCandleFilter(String brokerId, CandleFilter filter) {
+	protected GqlCandleFilter(String brokerId, CandleFilter filter) {
 		this.brokerId = brokerId;
 		this.filter = filter;
 	}
 
-	public String getBrokerId() {
+	protected String getBrokerId() {
 		return brokerId;
 	}
 
-	public CandleFilter getFilter() {
+	protected CandleFilter getFilter() {
 		return filter;
 	}
 
-	public static GqlCandleFilter fromMap(Map<String, Object> map) {
+	protected static GqlCandleFilter fromMap(Map<String, Object> map) {
 		if (map == null)
 			return null;
 		String brokerId = (String) map.get("brokerId");

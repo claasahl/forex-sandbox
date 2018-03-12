@@ -5,11 +5,11 @@ import org.github.claasahl.forex.database.BrokerInstance;
 class GqlBroker {
 	private final BrokerInstance brokerInstance;
 
-	public GqlBroker(BrokerInstance brokerInstance) {
+	protected GqlBroker(BrokerInstance brokerInstance) {
 		this.brokerInstance = brokerInstance;
 	}
 
-	public BrokerInstance getBrokerInstance() {
+	protected BrokerInstance getBrokerInstance() {
 		return brokerInstance;
 	}
 
