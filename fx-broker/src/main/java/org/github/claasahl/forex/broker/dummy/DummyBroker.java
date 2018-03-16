@@ -2,7 +2,6 @@ package org.github.claasahl.forex.broker.dummy;
 
 import java.time.OffsetDateTime;
 import org.github.claasahl.forex.broker.*;
-import org.github.claasahl.forex.broker.Rate.Builder;
 import io.reactivex.Observable;
 
 public class DummyBroker implements Broker {
