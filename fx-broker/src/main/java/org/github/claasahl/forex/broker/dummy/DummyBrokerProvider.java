@@ -1,6 +1,7 @@
-package org.github.claasahl.forex.broker;
+package org.github.claasahl.forex.broker.dummy;
 
 import java.util.Properties;
+import org.github.claasahl.forex.broker.Broker;
 import org.github.claasahl.forex.broker.spi.BrokerProvider;
 
 public class DummyBrokerProvider implements BrokerProvider {
