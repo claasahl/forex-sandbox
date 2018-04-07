@@ -44,6 +44,11 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.github.claasahl.forex</groupId>
+			<artifactId>fx-broker</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>io.reactivex.rxjava2</groupId>
 			<artifactId>rxjava</artifactId>
 			<version>${version.io.reactivex.rxjava2.rxjava}</version>

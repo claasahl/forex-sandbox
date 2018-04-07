@@ -1,11 +1,17 @@
-package org.github.claasahl.forex.database;
+package org.github.claasahl.forex.broker;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;
-import org.github.claasahl.forex.model.Rate;
 
-class InternalRate implements Rate {
-	private final String symbol;
+/**
+ * The interface {@link Rate}. It is intended to represent an exchange rate. The
+ * rate is defined by its primary properties (i.e. symbol, time, bid price and
+ * ask price).
+ *
+ * @author Claas Ahlrichs
+ *
+ */
+public final class Rate implements Comparable<Rate> {
 	private final OffsetDateTime dateTime;
 	private final double bid;
 	private final double ask;
@@ -16,36 +22,75 @@ class InternalRate implements Rate {
 	 * @param builder
 	 *            the builder with which the rate is constructed
 	 */
-	InternalRate(Builder builder) {
-		symbol = builder.getSymbol();
+	Rate(Builder builder) {
 		dateTime = builder.getDateTime();
 		bid = builder.getBid();
 		ask = builder.getAsk();
 	}
-	
-	@Override
-	public String getSymbol() {
-		return symbol;
-	}
 
-	@Override
+	/**
+	 * Returns the date and time of this rate. The instantaneous point on the
+	 * time-line at which this rate was observed.
+	 * 
+	 * @return the date and time
+	 */
 	public OffsetDateTime getDateTime() {
 		return dateTime;
 	}
 
-	@Override
+	/**
+	 * Returns the bid price of this rate. It represents the price at which the
+	 * market is prepared to buy a product (i.e. the price at which a trader can
+	 * sell a product).
+	 *
+	 * @return the bid price
+	 */
 	public double getBid() {
 		return bid;
 	}
 
-	@Override
+	/**
+	 * Returns the ask price of this rate. It represents the price at which the
+	 * market is prepared to sell a product (i.e. the price at which a trader can
+	 * buy a product). The ask price is also known as the offer.
+	 *
+	 * @return the ask price
+	 */
 	public double getAsk() {
 		return ask;
 	}
 
+	/**
+	 * Returns the spread this rate. It represents the difference between the bid
+	 * price and the ask price.
+	 *
+	 * @return the spread
+	 */
+	public double getSpread() {
+		return bid - ask;
+	}
+
+	/**
+	 * Returns a {@link Builder} that has been initialized with this rate.
+	 * 
+	 * @return a {@link Builder}
+	 */
+	public Builder toBuilder() {
+		return new Builder()
+				.setDateTime(dateTime)
+				.setBid(bid)
+				.setAsk(ask);
+	}
+	
+
+	@Override
+	public int compareTo(Rate o) {
+		return dateTime.compareTo(o.dateTime);
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(symbol, dateTime, bid, ask);
+		return Objects.hash(dateTime, bid, ask);
 	}
 
 	@Override
@@ -55,17 +100,16 @@ class InternalRate implements Rate {
 		if (!(obj instanceof Rate))
 			return false;
 		Rate other = (Rate) obj;
-		return Objects.equals(symbol, other.getSymbol())
-				&& Objects.equals(dateTime, other.getDateTime())
-				&& bid == other.getBid()
-				&& ask == other.getAsk();
+		return Objects.equals(dateTime, other.dateTime)
+				&& bid == other.bid
+				&& ask == other.ask;
 	}
 	
 	@Override
 	public String toString() {
-		return "Rate [symbol=" + symbol + ", dateTime=" + dateTime + ", bid=" + bid + ", ask=" + ask + "]";
+		return "Rate [dateTime=" + dateTime + ", bid=" + bid + ", ask=" + ask + "]";
 	}
-	
+
 	/**
 	 * The interface <code>Rate.Builder</code>. It represents ...
 	 * 
@@ -75,8 +119,7 @@ class InternalRate implements Rate {
 	 * @author Claas Ahlrichs
 	 *
 	 */
-	public static final class Builder implements Rate {
-		private String symbol;
+	public static final class Builder {
 		private OffsetDateTime dateTime;
 		private double bid;
 		private double ask;
@@ -84,7 +127,6 @@ class InternalRate implements Rate {
 		/**
 		 * Creates a {@link Builder} that has been initialized with default values.
 		 * <ul>
-		 * <li>symbol = null</li>
 		 * <li>dateTime = {@link OffsetDateTime#now()}</li>
 		 * <li>bid = 0.0</li>
 		 * <li>ask = 0.0</li>
@@ -92,24 +134,6 @@ class InternalRate implements Rate {
 		 */
 		public Builder() {
 			dateTime = OffsetDateTime.now();
-		}
-		
-		/**
-		 * Sets the symbol of the rate.
-		 * 
-		 * @param symbol
-		 *            the symbol
-		 * @return this builder
-		 * @see Rate#getSymbol()
-		 */
-		public Builder setSymbol(String symbol) {
-			this.symbol = symbol;
-			return this;
-		}
-
-		@Override
-		public String getSymbol() {
-			return symbol;
 		}
 
 		/**
@@ -125,7 +149,6 @@ class InternalRate implements Rate {
 			return this;
 		}
 
-		@Override
 		public OffsetDateTime getDateTime() {
 			return dateTime;
 		}
@@ -143,7 +166,6 @@ class InternalRate implements Rate {
 			return this;
 		}
 
-		@Override
 		public double getBid() {
 			return bid;
 		}
@@ -161,7 +183,6 @@ class InternalRate implements Rate {
 			return this;
 		}
 
-		@Override
 		public double getAsk() {
 			return ask;
 		}
@@ -174,7 +195,7 @@ class InternalRate implements Rate {
 		 * @return the rate with the specified parameters
 		 */
 		public Rate build() {
-			return new InternalRate(this);
+			return new Rate(this);
 		}
 	}
 }

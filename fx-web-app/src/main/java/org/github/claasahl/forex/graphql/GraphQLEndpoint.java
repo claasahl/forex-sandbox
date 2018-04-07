@@ -9,10 +9,8 @@ import graphql.servlet.SimpleGraphQLServlet;
 
 public class GraphQLEndpoint extends SimpleGraphQLServlet {
 	private static final long serialVersionUID = -407893796327589811L;
-	private static final BrokerRepository BROKER_REPOSITORY = new BrokerRepository();
+	private static final BrokerInstanceRepository BROKER_INSTANCE_REPOSITORY = new BrokerInstanceRepository();
 	private static final SymbolRepository SYMBOL_REPOSITORY = new SymbolRepository();
-	private static final CandleRepository CANDLE_REPOSITORY = new CandleRepository();
-	private static final RateRepository RATE_REPOSITORY = new RateRepository();
 
 	public GraphQLEndpoint() {
 		super(buildSchema());
@@ -38,14 +36,13 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 				.scalar(Scalars.duration)
 				.type("Query", GraphQLEndpoint::wiringForQuery)
 				.type("Broker", GraphQLEndpoint::wiringForBroker)
-				.type("Symbol", GraphQLEndpoint::wiringForSymbol)
 				.type("Candle", GraphQLEndpoint::wiringForCandle)
 				.type("Rate", GraphQLEndpoint::wiringForRate)
 				.build();
 	}
 
 	private static Builder wiringForQuery(Builder builder) {
-		QueryResolver queryResolver = new QueryResolver(BROKER_REPOSITORY, CANDLE_REPOSITORY, RATE_REPOSITORY);
+		QueryResolver queryResolver = new QueryResolver(BROKER_INSTANCE_REPOSITORY);
 		return builder
 				.dataFetcher("brokers", queryResolver::getBrokers)
 				.dataFetcher("broker", queryResolver::getBroker)
@@ -58,20 +55,13 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
 		return builder.dataFetcher("symbols", brokerResolver::getSymbols);
 	}
 
-	private static Builder wiringForSymbol(Builder builder) {
-		SymbolResolver symbolResolver = new SymbolResolver(BROKER_REPOSITORY);
-		return builder.dataFetcher("broker", symbolResolver::getBroker);
-	}
-
 	private static Builder wiringForCandle(Builder builder) {
-		CandleResolver candleResolver = new CandleResolver(BROKER_REPOSITORY);
+		CandleResolver candleResolver = new CandleResolver(BROKER_INSTANCE_REPOSITORY);
 		return builder.dataFetcher("broker", candleResolver::getBroker);
 	}
 
 	private static Builder wiringForRate(Builder builder) {
-		RateResolver rateResolver = new RateResolver(BROKER_REPOSITORY);
-		return builder
-				.dataFetcher("broker", rateResolver::getBroker)
-				.dataFetcher("spread", rateResolver::getSpread);
+		RateResolver rateResolver = new RateResolver(BROKER_INSTANCE_REPOSITORY);
+		return builder.dataFetcher("broker", rateResolver::getBroker);
 	}
 }

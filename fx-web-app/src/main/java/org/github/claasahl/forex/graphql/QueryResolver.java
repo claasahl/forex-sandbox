@@ -1,43 +1,50 @@
 package org.github.claasahl.forex.graphql;
 
 import java.util.*;
-import org.github.claasahl.forex.database.*;
-import org.github.claasahl.forex.model.*;
+import org.github.claasahl.forex.broker.BrokerService;
+import org.github.claasahl.forex.database.BrokerInstanceRepository;
 import graphql.schema.DataFetchingEnvironment;
 
 class QueryResolver {
-	private final BrokerRepository brokerRepository;
-	private final CandleRepository candleRepository;
-	private final RateRepository rateRepository;
+	private final BrokerService brokerService;
+	private final BrokerInstanceRepository brokerInstanceRepository;
 
-	public QueryResolver(BrokerRepository brokerRepository, CandleRepository candleRepository,
-			RateRepository rateRepository) {
-		this.brokerRepository = brokerRepository;
-		this.candleRepository = candleRepository;
-		this.rateRepository = rateRepository;
+	protected QueryResolver(BrokerInstanceRepository brokerInstanceRepository) {
+		this.brokerService = new BrokerService();
+		this.brokerInstanceRepository = brokerInstanceRepository;
 	}
 
-	public Collection<Broker> getBrokers(DataFetchingEnvironment environment) {
+	protected Collection<GqlBroker> getBrokers(DataFetchingEnvironment environment) {
 		Map<String, Object> filterMap = environment.getArgument("filter");
-		BrokerFilter filter = BrokerFilter.fromMap(filterMap);
-		return brokerRepository.getBrokers(filter);
+		GqlBrokerFilter filter = GqlBrokerFilter.fromMap(filterMap);
+		return brokerInstanceRepository.getBrokerInstances(filter.getFilter()).map(GqlBroker::new).toList()
+				.blockingGet();
 	}
-	
-	public Broker getBroker(DataFetchingEnvironment environment) {
+
+	protected GqlBroker getBroker(DataFetchingEnvironment environment) {
 		String id = environment.getArgument("id");
-		int brokerId = Integer.valueOf(id);
-		return brokerRepository.getBrokerForId(brokerId);
+		return brokerInstanceRepository.getBrokerInstanceForId(id).map(GqlBroker::new).blockingGet();
 	}
 
-	public Collection<Candle> getCandles(DataFetchingEnvironment environment) {
+	protected Collection<GqlCandle> getCandles(DataFetchingEnvironment environment) {
 		Map<String, Object> filterMap = environment.getArgument("filter");
-		CandleFilter filter = CandleFilter.fromMap(filterMap);
-		return candleRepository.getCandles(filter);
+		GqlCandleFilter filter = GqlCandleFilter.fromMap(filterMap);
+		return brokerInstanceRepository.getBrokerInstanceForId(filter.getBrokerId())
+				.flatMap(brokerInstance -> brokerService.getBroker(brokerInstance.getProviderName(),
+						brokerInstance.getConfiguration()))
+				.flatMapObservable(broker -> broker.candles(filter.getFilter()))
+				.map(candle -> new GqlCandle(filter, candle)).toList()
+				.blockingGet();
 	}
 
-	public Collection<Rate> getRates(DataFetchingEnvironment environment) {
+	protected Collection<GqlRate> getRates(DataFetchingEnvironment environment) {
 		Map<String, Object> filterMap = environment.getArgument("filter");
-		RateFilter filter = RateFilter.fromMap(filterMap);
-		return rateRepository.getRates(filter);
+		GqlRateFilter filter = GqlRateFilter.fromMap(filterMap);
+		return brokerInstanceRepository.getBrokerInstanceForId(filter.getBrokerId())
+				.flatMap(brokerInstance -> brokerService.getBroker(brokerInstance.getProviderName(),
+						brokerInstance.getConfiguration()))
+				.flatMapObservable(broker -> broker.rates(filter.getFilter()))
+				.map(rate -> new GqlRate(filter, rate)).toList()
+				.blockingGet();
 	}
 }

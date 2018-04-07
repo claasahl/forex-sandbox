@@ -11,6 +11,7 @@
 	<modules>
 		<module>fx-base</module>
 
+		<module>fx-broker</module>
 		<module>playground</module>
 		<module>fx-web-app</module>
 		<module>fx-web-frontend</module>
